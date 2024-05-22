@@ -1,38 +1,10 @@
 import jwt from "jsonwebtoken";
 import otpGenerator from "otp-generator";
+import { OTP } from "../models/otp.models.js";
 import { USER } from "../models/user.models.js";
 import { DETAILS } from "../models/details.models.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { SuccessResponse, ErrorResponse } from "../utils/responses.utils.js";
-import { OTP } from "../models/otp.models.js";
-import { mailer } from "../utils/mailer.utils.js";
-
-const sendVerificationOTP = async (email) => {
-    try {
-        let otp = otpGenerator.generate(6, {
-            lowerCaseAlphabets: false,
-            specialChars: false,
-            upperCaseAlphabets: false
-        })
-    
-        let otpRes = await OTP.findOne({ otp });
-        while (otpRes) {
-            otp = otpGenerator.generate(6, {
-                lowerCaseAlphabets: false,
-                specialChars: false,
-                upperCaseAlphabets: false
-            })
-    
-            otpRes = await OTP.findOne({ otp });
-        }
-    
-        await OTP.create({ email, otp });
-
-    } catch (error) {
-        console.log("Error in sending verification otp");
-        console.log(error);
-    }
-}
 
 
 const register = asyncHandler(async (req, res) => {
@@ -47,7 +19,7 @@ const register = asyncHandler(async (req, res) => {
         return ErrorResponse(res, 400, "Account already exists");
     }
 
-    await sendVerificationOTP(email);
+    await OTP.create({ email });
 
     return SuccessResponse(res, `A verification otp has been sent to your email`);
 });
