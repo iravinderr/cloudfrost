@@ -38,12 +38,14 @@ otpSchema.pre("save", async function (next) {
         otpExists = await mongoose.models.OTP.findOne({ otp : this.otp });
     }
     
-    await mailer(
+    const mail_response = await mailer(
         this.email,
         `Verification otp from MyCloud Services`,
         `This is the verification otp email from MyCloud Services.
         Use ${this.otp} as your verification otp. This otp is valid for the next five minutes.`
     );
+
+    // console.log(mail_response);
 
     next();
 });
