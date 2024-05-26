@@ -71,6 +71,8 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
+/public
+/backend/.env
 .env
 .env.test
 .env.production
