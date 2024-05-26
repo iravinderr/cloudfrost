@@ -10,12 +10,14 @@ const mailer = async (email, title, body) => {
             }
         })
 
-        return await transporter.sendMail({
+        const mailResponse = await transporter.sendMail({
             from: `MyCloud Services`,
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`
         });
+
+        return mailResponse;
     } catch (error) {
         console.log(`MAIL SENDING ERROR`);
         console.log(error);
