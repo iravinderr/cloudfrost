@@ -4,6 +4,11 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
     {
+        fullName: {
+            type: String,
+            required: true,
+            trim: true
+        },
         email: {
             type: String,
             required: true,
@@ -22,9 +27,15 @@ const userSchema = new Schema(
         refreshToken: {
             type: String
         },
-        details: {
-            type: Schema.Types.ObjectId,
-            ref: "DETAILS"
+        phone: {
+            type: String
+        },
+        gender: {
+            type: String,
+            enum: ["Male", "Female", "Others"]
+        },
+        DOB : {
+            type: Date
         }
     },
 
