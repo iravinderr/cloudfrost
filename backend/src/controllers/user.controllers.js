@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
-import otpGenerator from "otp-generator";
 import { OTP } from "../models/otp.models.js";
 import { USER } from "../models/user.models.js";
-import { DETAILS } from "../models/details.models.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { SuccessResponse, ErrorResponse } from "../utils/responses.utils.js";
 
@@ -37,8 +35,7 @@ const confirmRegistration = asyncHandler(async (req, res) => {
         return ErrorResponse(res, 400, "Entered otp is wrong"); 
     }
 
-    const details = await DETAILS.create({ fullName });
-    await USER.create({ email, password, verified: true, details: details._id });
+    await USER.create({ fullName, email, password, verified: true});
 
     return SuccessResponse(res, `You have been registered successfully`);
 });

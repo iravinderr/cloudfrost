@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 // INITIALISING THE APP
 const app = express();
 
-
 // CORS MIDDLEWARE
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -25,9 +24,15 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 
+const api_version1 = `/api/v1/user`
+
 // USER MIDDLEWARES
 import userRoutes from "./routes/user.routes.js";
-app.use("/api/v1/user", userRoutes);
+app.use(`${api_version1}`, userRoutes);
+
+// FOLDER MIDDLEWARES
+import folderRoutes from "./routes/folder.routes.js";
+app.use(`${api_version1}`, folderRoutes);
 
 
 export default app;

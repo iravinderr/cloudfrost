@@ -10,7 +10,7 @@ const fileSchema = new Schema(
             type: String,
             required: true
         },
-        folderId: {
+        parentFolderId: {
             type: Schema.Types.ObjectId,
             ref: "FOLDER",
             default: null
