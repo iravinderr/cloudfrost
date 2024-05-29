@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 
-const api_version1 = `/api/v1/user`
+const api_version1 = `/api/v1/user`;
 
 // USER MIDDLEWARES
 import userRoutes from "./routes/user.routes.js";
@@ -34,5 +34,8 @@ app.use(`${api_version1}`, userRoutes);
 import folderRoutes from "./routes/folder.routes.js";
 app.use(`${api_version1}`, folderRoutes);
 
+// FILE MIDDLEWARES
+import fileRoutes from "./routes/file.routes.js";
+app.use(`${api_version1}`, fileRoutes);
 
 export default app;

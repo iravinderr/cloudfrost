@@ -4,8 +4,7 @@ const folderSchema = new Schema(
     {
         name: {
             type: String,
-            required: true,
-            unique: true,
+            required: true
         },
         parentFolderId: {
             type: Schema.Types.ObjectId,
