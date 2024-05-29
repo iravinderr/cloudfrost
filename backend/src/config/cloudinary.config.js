@@ -1,11 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
 
-const cdConnect = () => {
+const connectCD = () => {
     try {
         const connectionInstance = cloudinary.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-            api_key: CLOUDINARY_API_KEY,
-            api_secret: CLOUDINARY_API_SECRET
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET
         });
 
         console.log("CLOUDINARY CONNECTED");
@@ -16,4 +16,4 @@ const cdConnect = () => {
     }
 }
 
-export default cdConnect;
+export default connectCD;
