@@ -17,7 +17,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
         return ErrorResponse(res, 401, "Session expired. Login again.");
     }
 
-    req.user = user;
+    req.user = decodedToken;
     next();
 });
 
