@@ -44,8 +44,7 @@ const renameFolder = asyncHandler(async (req, res) => {
 });
 
 const deleteFolder = asyncHandler(async (req, res) => {
-    // const userId = req.user?._id;
-    const { folderId } = req.body;
+    const folderId = req.query.folderId;
 
     const deleteFolderContent = async (folderId) => {
         const subFolders = await FOLDER.find({ parentFolderId: folderId });

@@ -51,14 +51,14 @@ const renameFile = asyncHandler(async (req, res) => {
 });
 
 const deleteFile = asyncHandler(async (req, res) => {
-    const { fileId } = req.body;
+    const fileId = req.query.fileId;
 
     const file = await FILE.findById(fileId);
     if (!file) {
         return ErrorResponse(res, 404, "File does not exists");
     }
 
-    const publicId = file.url.split("/").pop().split(".")[0];
+    const publicId = file.url.split("/").splice(-2).join("/").split(".")[0];
 
     await deleteFromCloudinary(publicId);
     await FILE.findByIdAndDelete(fileId);
