@@ -19,18 +19,10 @@ const createFolder = asyncHandler(async (req, res) => {
 });
 
 const getFolders = asyncHandler(async (req, res) => {
-    const parentFolderId = req.query.parentFolderId;
     const userId = req.user?._id;
+    const parentFolderId = req.query?.parentFolderId;
 
-    const foldersArray = await FOLDER.find({ parentFolderId, userId });
-
-    const folders = [];
-    foldersArray.forEach((folder) => {
-        folders.push({
-            name: folder.name,
-            folderId: folder._id
-        });
-    });
+    const folders = await FOLDER.find({ parentFolderId, userId }).select("-parentFolderId -userId -__v");
 
     return SuccessResponse(res, "", folders);
 });

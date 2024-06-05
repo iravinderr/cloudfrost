@@ -8,10 +8,7 @@ import {
     renameFolder,
 } from "../controllers/folder.controllers.js";
 
-
-
 const router = Router();
-
 
 
 // CREATE FOLDER
@@ -25,7 +22,6 @@ router.put("/folder/rename", verifyToken, upload.none(), renameFolder);
 
 // DELETE FOLDER
 router.delete("/folder/delete", verifyToken, upload.none(), deleteFolder);
-
 
 
 export default router;

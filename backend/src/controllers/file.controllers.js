@@ -1,9 +1,7 @@
 import { FILE } from "../models/file.models.js";
-import { uploadToCloudinary } from "../utils/cloudinary.utils.js";
+import { deleteFromCloudinary, uploadToCloudinary } from "../utils/cloudinary.utils.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse, SuccessResponse } from "../utils/responses.utils.js";
-
-
 
 
 const uploadFile = asyncHandler(async (req, res) => {
@@ -27,6 +25,15 @@ const uploadFile = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "File uploaded");
 });
 
+const getFiles = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
+    const parentFolderId = req.query.parentFolderId;
+
+    const files = await FILE.find({ parentFolderId, userId }).select("-parentFolderId -userId -__v");
+
+    return SuccessResponse(res, "", files);
+});
+
 const renameFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { name, fileId, parentFolderId } = req.body;
@@ -44,14 +51,16 @@ const renameFile = asyncHandler(async (req, res) => {
 });
 
 const deleteFile = asyncHandler(async (req, res) => {
-    const userId = req.user?._id;
-    const { fileId, parentFolderId } = req.body;
+    const { fileId } = req.body;
 
     const file = await FILE.findById(fileId);
     if (!file) {
         return ErrorResponse(res, 404, "File does not exists");
     }
 
+    const publicId = file.url.split("/").pop().split(".")[0];
+
+    await deleteFromCloudinary(publicId);
     await FILE.findByIdAndDelete(fileId);
 
     return SuccessResponse(res, "File deleted");
@@ -61,5 +70,6 @@ const deleteFile = asyncHandler(async (req, res) => {
 export {
     uploadFile,
     deleteFile,
-    renameFile
+    renameFile,
+    getFiles
 };
