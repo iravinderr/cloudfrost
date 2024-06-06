@@ -1,6 +1,6 @@
-export const backend_host = `http://localhost:4000`;
-export const api_version = '/api/v1';
-export const base_url = `${backend_host}${api_version}/user`;
+const backend_host = `http://localhost:4000`;
+const api_version = '/api/v1';
+const base_url = `${backend_host}${api_version}/user`;
 
 
 // USER APIs
