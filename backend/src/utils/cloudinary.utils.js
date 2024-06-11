@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
-const uploadToCloudinary = async (localFilePath) => {
+export const uploadToCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null;
 
@@ -21,7 +21,7 @@ const uploadToCloudinary = async (localFilePath) => {
     }
 }
 
-const deleteFromCloudinary = async (publicId) => {
+export const deleteFromCloudinary = async (publicId) => {
     try {
         await cloudinary.uploader.destroy(publicId);
     } catch (error) {
@@ -29,5 +29,3 @@ const deleteFromCloudinary = async (publicId) => {
         console.log(error);
     }
 }
-
-export { uploadToCloudinary, deleteFromCloudinary };

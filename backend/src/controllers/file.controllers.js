@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse, SuccessResponse } from "../utils/responses.utils.js";
 
 
-const uploadFile = asyncHandler(async (req, res) => {
+export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { parentFolderId } = req.body;
     const file = req.file;
@@ -25,7 +25,7 @@ const uploadFile = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "File uploaded");
 });
 
-const getFiles = asyncHandler(async (req, res) => {
+export const getFiles = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const parentFolderId = req.query.parentFolderId;
 
@@ -34,7 +34,7 @@ const getFiles = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "", files);
 });
 
-const renameFile = asyncHandler(async (req, res) => {
+export const renameFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { name, fileId, parentFolderId } = req.body;
 
@@ -50,7 +50,7 @@ const renameFile = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "File is renamed");
 });
 
-const deleteFile = asyncHandler(async (req, res) => {
+export const deleteFile = asyncHandler(async (req, res) => {
     const fileId = req.query.fileId;
 
     const file = await FILE.findById(fileId);
@@ -65,11 +65,3 @@ const deleteFile = asyncHandler(async (req, res) => {
 
     return SuccessResponse(res, "File deleted");
 });
-
-
-export {
-    uploadFile,
-    deleteFile,
-    renameFile,
-    getFiles
-};

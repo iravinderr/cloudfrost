@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse, SuccessResponse } from "../utils/responses.utils.js";
 
 
-const createFolder = asyncHandler(async (req, res) => {
+export const createFolder = asyncHandler(async (req, res) => {
     const { name, parentFolderId } = req.body;
     const userId = req.user?._id;
 
@@ -18,7 +18,7 @@ const createFolder = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "Folder created", newFolder);
 });
 
-const getFolders = asyncHandler(async (req, res) => {
+export const getFolders = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const parentFolderId = req.query?.parentFolderId;
 
@@ -27,7 +27,7 @@ const getFolders = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "", folders);
 });
 
-const renameFolder = asyncHandler(async (req, res) => {
+export const renameFolder = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { name, folderId, parentFolderId } = req.body;
 
@@ -43,7 +43,7 @@ const renameFolder = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "Folder is renamed");
 });
 
-const deleteFolder = asyncHandler(async (req, res) => {
+export const deleteFolder = asyncHandler(async (req, res) => {
     const folderId = req.query.folderId;
 
     const deleteFolderContent = async (folderId) => {
@@ -66,11 +66,3 @@ const deleteFolder = asyncHandler(async (req, res) => {
 
     return SuccessResponse(res, "Folder deleted");
 });
-
-
-export {
-    createFolder,
-    getFolders,
-    renameFolder,
-    deleteFolder,
-}

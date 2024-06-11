@@ -6,7 +6,6 @@ import connectDB from "./config/database.config.js";
 
 const PORT = process.env.PORT || 8000;
 
-
 // CLOUDINARY CONNECTION
 connectCD();
 

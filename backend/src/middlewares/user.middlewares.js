@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse } from "../utils/responses.utils.js";
 
 
-const verifyToken = asyncHandler(async (req, res, next) => {
+export const verifyToken = asyncHandler(async (req, res, next) => {
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "") || req.body?.accessToken;
     if (!token) {
         return ErrorResponse(res, 401, "Unauthorized request");
@@ -20,6 +20,3 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     req.user = decodedToken;
     next();
 });
-
-
-export { verifyToken };

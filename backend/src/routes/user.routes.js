@@ -58,7 +58,4 @@ router.post("/validate-reset-password-otp", upload.none(), validateResetPassword
 router.post("/reset-password", upload.none(), resetPassword);
 
 
-
-
-
 export default router;

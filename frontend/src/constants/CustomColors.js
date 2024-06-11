@@ -1,0 +1,5 @@
+export const RaisinBlack =  "#211A1D"
+export const ElectricIndigo =  "#6320EE"
+export const SlateBlue =  "#8075FF"
+export const Magnolia =  "#F8F0FB"
+export const AshGray =  "#CAD5CA"

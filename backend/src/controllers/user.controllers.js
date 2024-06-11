@@ -7,7 +7,7 @@ import { SuccessResponse, ErrorResponse } from "../utils/responses.utils.js";
 
 // ================================================== REGISTRATION CONTROLLERS ==================================================
 
-const register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
@@ -24,7 +24,7 @@ const register = asyncHandler(async (req, res) => {
     return SuccessResponse(res, `A verification otp has been sent to your email`);
 });
 
-const confirmRegistration = asyncHandler(async (req, res) => {
+export const confirmRegistration = asyncHandler(async (req, res) => {
     const { fullName, email, password, otp } = req.body;
 
     const recentOTP = await OTP.findOne({ email }).sort({ createdAt : -1 }).limit(1);
@@ -43,7 +43,7 @@ const confirmRegistration = asyncHandler(async (req, res) => {
 
 // ================================================== LOGIN/LOGOUT CONTROLLERS ==================================================
 
-const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -81,7 +81,7 @@ const login = asyncHandler(async (req, res) => {
     });
 });
 
-const logout = asyncHandler(async (req, res) => {
+export const logout = asyncHandler(async (req, res) => {
     await USER.findByIdAndUpdate(req.user?._id, {refreshToken: ""});
 
     const options = {
@@ -101,7 +101,7 @@ const logout = asyncHandler(async (req, res) => {
 
 // ================================================== TOKEN CONTROLLERS ==================================================
 
-const refreshTokens = asyncHandler(async (req, res) => {
+export const refreshTokens = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!incomingRefreshToken) {
@@ -144,7 +144,7 @@ const refreshTokens = asyncHandler(async (req, res) => {
 
 // ================================================== CHANGE/RESET PASSWORD CONTROLLERS ==================================================
 
-const changePassword = asyncHandler(async (req, res) => {
+export const changePassword = asyncHandler(async (req, res) => {
     const { oldPassword, newPassword, confirmPassword } = req.body;
 
     if (newPassword !== confirmPassword) {
@@ -164,7 +164,7 @@ const changePassword = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "Password changed successfully");
 });
 
-const sendResetPasswordOTP = asyncHandler(async (req, res) => {
+export const sendResetPasswordOTP = asyncHandler(async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
@@ -181,7 +181,7 @@ const sendResetPasswordOTP = asyncHandler(async (req, res) => {
     return SuccessResponse(res, `A verification otp has been sent to your email`);
 });
 
-const validateResetPasswordOTP = asyncHandler(async (req, res) => {
+export const validateResetPasswordOTP = asyncHandler(async (req, res) => {
     const { email, otp } = req.body;
 
     const recentOTP = await OTP.findOne({ email }).sort({ createdAt : -1 }).limit(1);
@@ -195,7 +195,7 @@ const validateResetPasswordOTP = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "Success");
 });
 
-const resetPassword = asyncHandler(async (req, res) => {
+export const resetPassword = asyncHandler(async (req, res) => {
     const { email, newPassword, confirmPassword } = req.body;
 
     if (newPassword !== confirmPassword) {
@@ -210,14 +210,14 @@ const resetPassword = asyncHandler(async (req, res) => {
     return SuccessResponse(res, "Password reset successfully");
 });
 
-export { 
-    register,
-    confirmRegistration,
-    login,
-    logout,
-    changePassword,
-    refreshTokens,
-    sendResetPasswordOTP,
-    validateResetPasswordOTP,
-    resetPassword,
-};
+
+// ================================================== PROFILE CONTROLLERS ==================================================
+
+export const updateProfile = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
+    const { fullName, phone, gender, DOB } = req.body;
+
+    const user = await USER.findByIdAndUpdate(userId, { fullName, phone, gender, DOB }, { new: true }).select("-password -refreshToken");
+
+    return SuccessResponse(res, "", user);
+});
