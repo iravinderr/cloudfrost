@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { NavBar } from './components/components.js';
-import Login from './pages/Login.jsx';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import Navbar from './components/Navbar';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const [loginVisible, setLoginVisible] = useState(false);
-
   return (
-    <div className='h-screen w-screen overflow-hidden'>
-      <NavBar loginClick={() => setLoginVisible(true)} />
-      {loginVisible && <Login />}
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+      </Routes>
+    </Router>
   );
 }
 
