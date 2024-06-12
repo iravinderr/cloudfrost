@@ -11,14 +11,15 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(loginAPI, { email, password });
+      const response = await axios.post(loginAPI, { email, password }, {
+        withCredentials: true
+      });
       if (response.data.success) {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-        navigate('/');
+        console.log(response.data.message);
+        navigate('/dashboard');
       }
     } catch (error) {
-      console.error(error);
+      console.log(error.response.data.message);
     }
   };
 

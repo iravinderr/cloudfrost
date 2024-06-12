@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config({path: "./.env"});
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -5,7 +7,6 @@ import cookieParser from "cookie-parser";
 // INITIALISING THE APP
 const app = express();
 
-console.log("cors origin -> ", process.env.CORS_ORIGIN);
 // CORS MIDDLEWARE
 app.use(cors({
     origin: process.env.CORS_ORIGIN,

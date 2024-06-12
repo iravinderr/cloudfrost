@@ -4,6 +4,7 @@ import { verifyToken } from "../middlewares/user.middlewares.js";
 import { 
     changePassword,
     confirmRegistration,
+    getProfile,
     login,
     logout,
     refreshTokens,
@@ -56,6 +57,10 @@ router.post("/validate-reset-password-otp", upload.none(), validateResetPassword
 
 // RESET ACCOUNT PASSWORD
 router.post("/reset-password", upload.none(), resetPassword);
+
+
+
+router.get("/get-profile", verifyToken, getProfile);
 
 
 export default router;

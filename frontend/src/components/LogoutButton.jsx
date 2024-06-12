@@ -8,13 +8,10 @@ function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
       const response = await axios.post(logoutAPI, null, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       if (response.data.success) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         navigate('/login');
       }
     } catch (error) {

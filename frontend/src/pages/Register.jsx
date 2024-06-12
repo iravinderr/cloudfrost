@@ -1,36 +1,52 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { sendRegisterOtpAPI, confirmRegistrationAPI } from '../services/apis'; // Import the correct APIs
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  sendRegistrationOtpAPI,
+  confirmRegistrationAPI,
+} from "../services/apis";
 
 function Register() {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [otp, setOtp] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const navigate = useNavigate();
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(sendRegisterOtpAPI, { email });
+      const response = await axios.post(sendRegistrationOtpAPI, {
+        fullName,
+        email,
+        password,
+      });
+
       if (response.data.success) {
         setIsOtpSent(true);
+        console.log(response.data.message);
       }
     } catch (error) {
-      console.error(error);
+      console.log(error.response.data.message);
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(confirmRegistrationAPI, { email, otp, fullName, password });
+      const response = await axios.post(confirmRegistrationAPI, {
+        email,
+        otp,
+        fullName,
+        password,
+      });
       if (response.data.success) {
-        navigate('/login');
+        navigate("/login");
+        console.log(response.data.message);
       }
     } catch (error) {
+      console.log(error.response.data.message);
       console.error(error);
     }
   };
@@ -46,6 +62,7 @@ function Register() {
             onChange={(e) => setFullName(e.target.value)}
             required
           />
+
           <input
             type="email"
             placeholder="Email"
@@ -53,7 +70,16 @@ function Register() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <button type="submit">Send OTP</button>
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button type="submit">Register</button>
         </form>
       ) : (
         <form onSubmit={handleRegister}>
@@ -64,28 +90,8 @@ function Register() {
             onChange={(e) => setOtp(e.target.value)}
             required
           />
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Register</button>
+
+          <button type="submit">Confirm Registeration</button>
         </form>
       )}
     </div>

@@ -213,6 +213,10 @@ export const resetPassword = asyncHandler(async (req, res) => {
 
 // ================================================== PROFILE CONTROLLERS ==================================================
 
+export const getProfile = asyncHandler(async (req, res) => {
+    return SuccessResponse(res, "", req.user);
+});
+
 export const updateProfile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { fullName, phone, gender, DOB } = req.body;

@@ -4,7 +4,7 @@ const base_url = `${backend_host}${api_version}/user`;
 
 
 // USER APIs
-export const sendRegisterOtpAPI = `${base_url}/register`;
+export const sendRegistrationOtpAPI = `${base_url}/register`;
 export const confirmRegistrationAPI = `${base_url}/confirm-registration`;
 export const loginAPI = `${base_url}/login`;
 export const logoutAPI = `${base_url}/logout`;
@@ -14,6 +14,7 @@ export const changePasswordAPI = `${base_url}/change-password`;
 export const sendResetPasswordOtpAPI = `${base_url}/send-reset-password-otp`;
 export const validateResetPasswordOtpAPI = `${base_url}/validate-reset-password-otp`;
 export const resetPasswordAPI = `${base_url}/reset-password`;
+export const getProfileAPI = `${base_url}/get-profile`;
 
 // FOLDER APIs
 export const createFolderAPI = `${base_url}/folder/create`;
