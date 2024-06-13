@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { loginAPI } from '../services/apis';
 
-function Login() {
+function Login({ setLoggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -12,10 +12,15 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(loginAPI, { email, password }, {
-        withCredentials: true
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       });
+      
       if (response.data.success) {
         console.log(response.data.message);
+        setLoggedIn(true);
         navigate('/dashboard');
       }
     } catch (error) {

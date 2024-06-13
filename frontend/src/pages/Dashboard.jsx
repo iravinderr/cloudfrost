@@ -18,9 +18,14 @@ function Dashboard() {
           withCredentials: true,
           params: { parentFolderId }
         });
-        // const fileRes = await axios.get(getFilesAPI, { params: { parentFolderId } });
+
+        const fileRes = await axios.get(getFilesAPI, {
+          withCredentials: true,
+          params: { parentFolderId }
+        });
+
         setFolders(folderRes.data.data);
-        // setFiles(fileRes.data.data);
+        setFiles(fileRes.data.data);
       } catch (error) {
         console.log(error.response.data.message);
       }

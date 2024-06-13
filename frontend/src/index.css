@@ -52,16 +52,8 @@ button {
     background-color: #eaeaea;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    background-color: #333;
-    padding: 10px;
-}
-
 .navbar a {
     color: white;
-    text-decoration: none;
     padding: 10px;
 }
 

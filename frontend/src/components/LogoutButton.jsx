@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logoutAPI } from '../services/apis';
 
-function LogoutButton() {
+function LogoutButton({ setLoggedIn }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -12,14 +12,22 @@ function LogoutButton() {
         withCredentials: true
       });
       if (response.data.success) {
-        navigate('/login');
+        setLoggedIn(false);
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button
+    className='bg-red-500 text-white'
+    onClick={handleLogout}
+    >
+      Logout
+    </button>
+  );
 }
 
 export default LogoutButton;

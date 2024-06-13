@@ -1,9 +1,8 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-function PrivateRoute({ children }) {
-  const accessToken = localStorage.getItem('accessToken');
-  return accessToken ? children : <Navigate to="/login" />;
+function PrivateRoute({ children, loggedIn }) {
+  return loggedIn ? children : <Navigate to="/" />;
 }
 
 export default PrivateRoute;

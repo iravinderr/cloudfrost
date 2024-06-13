@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import Navbar from './components/Navbar';
-import PrivateRoute from './components/PrivateRoute';
+import { Dashboard, Home, Login, Profile, Register } from './pages/pages';
+import { Navbar, PrivateRoute } from './components/components';
+
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-      </Routes>
-    </Router>
+    <div className='h-screen w-screen overflow-hidden'>
+      <Router>
+        <Navbar setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<PrivateRoute loggedIn={loggedIn}><Dashboard /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute loggedIn={loggedIn}><Profile /></PrivateRoute>} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
