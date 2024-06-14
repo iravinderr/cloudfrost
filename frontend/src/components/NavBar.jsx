@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
+import { verifyToken } from "../utils/verifyToken";
 
-function Navbar({ loggedIn, setLoggedIn }) {
+function Navbar() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const verifiedToken = await verifyToken();
+      setAuthenticated(verifiedToken);
+    })();
+  }, []);
+  
   return (
     <div className="h-16 w-screen p-2 flex justify-evenly navbar bg-RaisinBlack gap-2">
       <div className="w-1/3 flex justify-center items-center  ">
         <Link to="/">MyCloud</Link>
       </div>
       <div className="w-1/3 flex justify-center items-center">
-        {!loggedIn && <Link to="/login">Login</Link>}
-        {!loggedIn && <Link to="/register">Register</Link>}
-        {loggedIn && <Link to="/dashboard">Dashboard</Link>}
-        {loggedIn && <Link to="/profile">Profile</Link>}
+        {!authenticated && <Link to="/login">Login</Link>}
+        {!authenticated && <Link to="/register">Register</Link>}
+        {authenticated && <Link to="/dashboard">Dashboard</Link>}
+        {authenticated && <Link to="/profile">Profile</Link>}
       </div>
       <div className="w-1/3 flex justify-center items-center">
-        {loggedIn && <LogoutButton setLoggedIn={setLoggedIn} />}
+        {authenticated && <LogoutButton />}
       </div>
     </div>
   );

@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { loginAPI } from '../services/apis';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { loginAPI } from "../services/apis";
+import toast from "react-hot-toast";
+import { verifyToken } from "../utils/verifyToken";
 
-function Login({ setLoggedIn }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const verifiedToken = await verifyToken();
+      setAuthenticated(verifiedToken);
+    })();
+  }, []);
+
+  if (authenticated) {
+    return <Navigate to="/dashboard" />
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(loginAPI, { email, password }, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data"
+      const response = await axios.post(
+        loginAPI,
+        { email, password },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
-      
+      );
+
       if (response.data.success) {
-        console.log(response.data.message);
-        setLoggedIn(true);
-        navigate('/dashboard');
+        toast.success(response.data.message);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        navigate("/dashboard");
       }
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -36,15 +60,19 @@ function Login({ setLoggedIn }) {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
+
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
+
+        <button type="button" onClick={togglePasswordVisibility}>
+          {showPassword ? "Hide Passowrd" : "Show Password"}
+        </button>
+
         <button type="submit">Login</button>
       </form>
     </div>

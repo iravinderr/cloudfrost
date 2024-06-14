@@ -47,7 +47,7 @@ export const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return ErrorResponse(res, 400, "All required fields must be filled to log in");
+        return ErrorResponse(res, 400, "Fill all the required fields");
     }
 
     const user = await USER.findOne({ email });

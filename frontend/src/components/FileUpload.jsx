@@ -20,11 +20,10 @@ function FileUpload({ parentFolderId }) {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.post(uploadFileAPI, formData, {
-        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
-        }
+        },
       });
       if (response.data.success) {
         window.location.reload();

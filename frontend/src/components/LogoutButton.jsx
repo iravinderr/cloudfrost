@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logoutAPI } from '../services/apis';
 
-function LogoutButton({ setLoggedIn }) {
+function LogoutButton() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -12,7 +12,8 @@ function LogoutButton({ setLoggedIn }) {
         withCredentials: true
       });
       if (response.data.success) {
-        setLoggedIn(false);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         navigate('/');
       }
     } catch (error) {

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import FileList from '../components/FileList';
-import FileUpload from '../components/FileUpload';
-import FolderCreation from '../components/FolderCreation';
 import { getFoldersAPI, getFilesAPI } from '../services/apis';
-import FolderList from '../components/FolderList';
+import ContextMenu from '../components/ContextMenu';
+import Modal from '../components/Modal'; // Import the modal component
+import toast from 'react-hot-toast';
 
 function Dashboard() {
-  const [folders, setFolders] = useState([]);
-  const [files, setFiles] = useState([]);
+  const [items, setItems] = useState([]);
   const [parentFolderId, setParentFolderId] = useState(null);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null); // State to handle the selected file for modal
 
   useEffect(() => {
     (async () => {
@@ -24,25 +24,69 @@ function Dashboard() {
           params: { parentFolderId }
         });
 
-        setFolders(folderRes.data.data);
-        setFiles(fileRes.data.data);
+        const combinedItems = [
+          ...folderRes.data.data.map(folder => ({ ...folder, type: 'folder' })),
+          ...fileRes.data.data.map(file => ({ ...file, type: 'file' }))
+        ];
+
+        setItems(combinedItems);
       } catch (error) {
-        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     })();
   }, [parentFolderId]);
 
+  const handleRightClick = (event) => {
+    event.preventDefault();
+    setContextMenu({
+      mouseX: event.clientX,
+      mouseY: event.clientY
+    });
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu(null);
+  };
+
+  const handleFolderClick = (folderId) => {
+    setParentFolderId(folderId);
+  };
+
+  const handleFileClick = (file) => {
+    setSelectedFile(file);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedFile(null);
+  };
+
   return (
-    <div className="dashboard">
-      <div>
-        <h3>Folders</h3>
-        <FolderList folders={folders} setParentFolderId={setParentFolderId} />
+    <div className="dashboard" onContextMenu={handleRightClick}>
+      <div className="item-list">
+        {items.map(item => (
+          item.type === 'folder' ?
+            <div key={item._id} className="folder-item" onClick={() => handleFolderClick(item._id)}>
+              {item.name}
+            </div> :
+            <div key={item._id} className="file-item" onClick={() => handleFileClick(item)}>
+              <img src={item.url} alt={item.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+              <div>{item.name}</div>
+            </div>
+        ))}
       </div>
-      <div className="main-content bg-slate-500">
-        <FolderCreation parentFolderId={parentFolderId} />
-        <FileList files={files} />
-        <FileUpload parentFolderId={parentFolderId} />
-      </div>
+
+      {contextMenu && (
+        <ContextMenu
+          mouseX={contextMenu.mouseX}
+          mouseY={contextMenu.mouseY}
+          handleClose={handleCloseContextMenu}
+          parentFolderId={parentFolderId}
+        />
+      )}
+
+      {selectedFile && (
+        <Modal file={selectedFile} handleClose={handleCloseModal} />
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
     register, 
     resetPassword, 
     sendResetPasswordOTP,
+    updateProfile,
     validateResetPasswordOTP
 } from "../controllers/user.controllers.js";
 
@@ -38,7 +39,7 @@ router.post("/logout", verifyToken, upload.none(), logout);
 // ================================================== WEB TOKEN ROUTES ==================================================
 
 // VERIFY THE TOKEN
-router.post("/verify-token", verifyToken, (req, res) => {return res.status(200)});
+router.post("/verify-token", verifyToken, (req, res) => {return res.status(200).json({success: true})});
 
 // REFRESH THE WEB/LOGIN TOKENS
 router.post("/refresh-tokens", upload.none(), refreshTokens);
@@ -61,6 +62,8 @@ router.post("/reset-password", upload.none(), resetPassword);
 
 
 router.get("/get-profile", verifyToken, getProfile);
+
+router.put("/update-profile", verifyToken, upload.none(), updateProfile);
 
 
 export default router;
