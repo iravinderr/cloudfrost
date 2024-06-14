@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { getFoldersAPI, getFilesAPI } from '../services/apis';
-import ContextMenu from '../components/ContextMenu';
-import Modal from '../components/Modal'; // Import the modal component
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getFoldersAPI, getFilesAPI } from "../services/apis";
+import ContextMenu from "../components/ContextMenu";
+import Modal from "../components/Modal"; // Import the modal component
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const [items, setItems] = useState([]);
@@ -16,17 +16,20 @@ function Dashboard() {
       try {
         const folderRes = await axios.get(getFoldersAPI, {
           withCredentials: true,
-          params: { parentFolderId }
+          params: { parentFolderId },
         });
 
         const fileRes = await axios.get(getFilesAPI, {
           withCredentials: true,
-          params: { parentFolderId }
+          params: { parentFolderId },
         });
 
         const combinedItems = [
-          ...folderRes.data.data.map(folder => ({ ...folder, type: 'folder' })),
-          ...fileRes.data.data.map(file => ({ ...file, type: 'file' }))
+          ...folderRes.data.data.map((folder) => ({
+            ...folder,
+            type: "folder",
+          })),
+          ...fileRes.data.data.map((file) => ({ ...file, type: "file" })),
         ];
 
         setItems(combinedItems);
@@ -40,7 +43,7 @@ function Dashboard() {
     event.preventDefault();
     setContextMenu({
       mouseX: event.clientX,
-      mouseY: event.clientY
+      mouseY: event.clientY,
     });
   };
 
@@ -61,18 +64,32 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard" onContextMenu={handleRightClick}>
+    <div onContextMenu={handleRightClick} className="w-screen h-screen p-8">
       <div className="item-list">
-        {items.map(item => (
-          item.type === 'folder' ?
-            <div key={item._id} className="folder-item" onClick={() => handleFolderClick(item._id)}>
+        {items.map((item) =>
+          item.type === "folder" ? (
+            <div
+              key={item._id}
+              className="folder-item"
+              onClick={() => handleFolderClick(item._id)}
+            >
               {item.name}
-            </div> :
-            <div key={item._id} className="file-item" onClick={() => handleFileClick(item)}>
-              <img src={item.url} alt={item.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+            </div>
+          ) : (
+            <div
+              key={item._id}
+              className="file-item"
+              onClick={() => handleFileClick(item)}
+            >
+              <img
+                src={item.url}
+                alt={item.name}
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              />
               <div>{item.name}</div>
             </div>
-        ))}
+          )
+        )}
       </div>
 
       {contextMenu && (

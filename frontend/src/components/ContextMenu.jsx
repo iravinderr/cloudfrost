@@ -7,7 +7,7 @@ function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId }) {
   const [showFolderCreation, setShowFolderCreation] = useState(false);
 
   const handleOptionClick = (option) => {
-    if (option === 'upload') {
+    if (option === 'uploadFile') {
       setShowUpload(true);
     } else if (option === 'createFolder') {
       setShowFolderCreation(true);
@@ -28,7 +28,7 @@ function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId }) {
       }}
       onMouseLeave={handleClose}
     >
-      <div onClick={() => handleOptionClick('upload')}>Upload File</div>
+      <div onClick={() => handleOptionClick('uploadFile')}>Upload File</div>
       <div onClick={() => handleOptionClick('createFolder')}>Create Folder</div>
 
       {showUpload && (
@@ -37,7 +37,7 @@ function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId }) {
         </div>
       )}
       {showFolderCreation && (
-        <div className="context-menu-create-folder">
+        <div className="bg-black context-menu-create-folder">
           <FolderCreation parentFolderId={parentFolderId} />
         </div>
       )}
