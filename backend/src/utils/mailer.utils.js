@@ -11,7 +11,7 @@ export const mailer = async (email, title, body) => {
         })
 
         const mailResponse = await transporter.sendMail({
-            from: `MyCloud Services`,
+            from: `Cloudfrost Services`,
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`

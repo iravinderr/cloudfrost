@@ -18,5 +18,5 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-    res.send("MyCloud Services");
+    res.send("Cloudfrost Services");
 })

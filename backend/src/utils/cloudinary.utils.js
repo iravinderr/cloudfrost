@@ -7,7 +7,7 @@ export const uploadToCloudinary = async (localFilePath) => {
 
         const uploadResponse = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto",
-            folder: "MyCloud",
+            folder: "Cloudfrost",
             use_filename: true
         });
 
