@@ -18,5 +18,5 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-    res.send(<h1>MyCloud</h1>);
+    res.send("MyCloud Services");
 })
