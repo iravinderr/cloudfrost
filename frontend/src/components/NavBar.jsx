@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
-import { verifyToken } from "../utils/verifyToken";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const verifiedToken = await verifyToken();
-      setAuthenticated(verifiedToken);
-    })();
-  }, []);
+  const {authenticated} = useAuth();
   
   return (
     <div className="h-16 w-screen p-2 flex justify-evenly navbar bg-RaisinBlack gap-2">

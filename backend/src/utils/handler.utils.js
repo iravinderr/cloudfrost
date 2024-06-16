@@ -5,7 +5,7 @@ export const asyncHandler = (func) => async (req, res, next) => {
         console.log(error);
         res.status(error.code || 500).json({
             success : false,
-            message : "Internal Server Error"
+            message : error.message || "Internal Server Error"
         });
     }
 }

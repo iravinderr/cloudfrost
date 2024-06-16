@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginAPI } from "../services/apis";
 import toast from "react-hot-toast";
-import { verifyToken } from "../utils/verifyToken";
+import { LineWave } from "react-loader-spinner";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    (async () => {
-      const verifiedToken = await verifyToken();
-      setAuthenticated(verifiedToken);
-    })();
-  }, []);
-
-  if (authenticated) {
-    return <Navigate to="/dashboard" />
-  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         loginAPI,
@@ -41,6 +31,7 @@ function Login() {
         toast.success(response.data.message);
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
+        setLoading(false);
         navigate("/dashboard");
       }
     } catch (error) {
@@ -51,6 +42,10 @@ function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // if (loading) {
+  //   return <LineWave color="black" />
+  // }
 
   return (
     <div className="login">

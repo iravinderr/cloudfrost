@@ -35,8 +35,18 @@ const userSchema = new Schema(
             type: String,
             enum: ["Male", "Female", "Others"]
         },
-        DOB : {
+        DOB: {
             type: Date
+        },
+        storageLimit: {
+            type: Number,
+            required: true,
+            default: 50
+        },
+        availableStorage: {
+            type: Number,
+            required: true,
+            default: 50
         }
     },
 

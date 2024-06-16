@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logoutAPI } from '../services/apis';
+import { useAuth } from '../context/AuthContext';
 
 function LogoutButton() {
+  const { setAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -14,6 +16,7 @@ function LogoutButton() {
       if (response.data.success) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        setAuthenticated(false);
         navigate('/');
       }
     } catch (error) {

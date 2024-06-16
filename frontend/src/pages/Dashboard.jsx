@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 import ContextMenu from "../components/ContextMenu";
 import Modal from "../components/Modal"; // Import the modal component
 import toast from "react-hot-toast";
+import { LineWave } from "react-loader-spinner";
 
 function Dashboard() {
   const [items, setItems] = useState([]);
-  const [parentFolderId, setParentFolderId] = useState(null);
   const [contextMenu, setContextMenu] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null); // State to handle the selected file for modal
+  const [loading, setLoading] = useState(true);
+  const { parentFolderId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const folderRes = await axios.get(getFoldersAPI, {
-          withCredentials: true,
-          params: { parentFolderId },
-        });
+  const fetchItems = async () => {
+    try {
+      const folderRes = await axios.get(getFoldersAPI, {
+        withCredentials: true,
+        params: { parentFolderId },
+      });
 
-        const fileRes = await axios.get(getFilesAPI, {
-          withCredentials: true,
-          params: { parentFolderId },
-        });
+      const fileRes = await axios.get(getFilesAPI, {
+        withCredentials: true,
+        params: { parentFolderId },
+      });
 
+      if (folderRes.data.success && fileRes.data.success) {          
         const combinedItems = [
           ...folderRes.data.data.map((folder) => ({
             ...folder,
@@ -31,12 +36,17 @@ function Dashboard() {
           })),
           ...fileRes.data.data.map((file) => ({ ...file, type: "file" })),
         ];
-
+        
+        setLoading(false);
         setItems(combinedItems);
-      } catch (error) {
-        toast.error(error.response.data.message);
       }
-    })();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "An error occurred.");
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
   }, [parentFolderId]);
 
   const handleRightClick = (event) => {
@@ -52,7 +62,7 @@ function Dashboard() {
   };
 
   const handleFolderClick = (folderId) => {
-    setParentFolderId(folderId);
+    navigate(`/dashboard/${folderId}`);
   };
 
   const handleFileClick = (file) => {
@@ -63,8 +73,17 @@ function Dashboard() {
     setSelectedFile(null);
   };
 
+  // const handleBackClick = () => {
+  //   navigate(-1);
+  // };
+
+  if (loading) {
+    return <LineWave color="black" />;
+  }
+
   return (
     <div onContextMenu={handleRightClick} className="w-screen h-screen p-8">
+      {/* <button onClick={handleBackClick}>Back</button> */}
       <div className="item-list">
         {items.map((item) =>
           item.type === "folder" ? (
@@ -98,6 +117,7 @@ function Dashboard() {
           mouseY={contextMenu.mouseY}
           handleClose={handleCloseContextMenu}
           parentFolderId={parentFolderId}
+          refreshItems={fetchItems}
         />
       )}
 

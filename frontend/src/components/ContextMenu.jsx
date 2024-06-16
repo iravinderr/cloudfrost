@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FileUpload from './FileUpload';
 import FolderCreation from './FolderCreation';
 
-function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId }) {
+function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId, refreshItems }) {
   const [showUpload, setShowUpload] = useState(false);
   const [showFolderCreation, setShowFolderCreation] = useState(false);
 
@@ -28,18 +28,14 @@ function ContextMenu({ mouseX, mouseY, handleClose, parentFolderId }) {
       }}
       onMouseLeave={handleClose}
     >
-      <div onClick={() => handleOptionClick('uploadFile')}>Upload File</div>
       <div onClick={() => handleOptionClick('createFolder')}>Create Folder</div>
+      <div onClick={() => handleOptionClick('uploadFile')}>Upload File</div>
 
-      {showUpload && (
-        <div className="context-menu-upload">
-          <FileUpload parentFolderId={parentFolderId} />
-        </div>
-      )}
       {showFolderCreation && (
-        <div className="bg-black context-menu-create-folder">
-          <FolderCreation parentFolderId={parentFolderId} />
-        </div>
+        <FolderCreation parentFolderId={parentFolderId} refreshItems={refreshItems} />
+      )}
+      {showUpload && (
+        <FileUpload parentFolderId={parentFolderId} refreshItems={refreshItems} />
       )}
     </div>
   );

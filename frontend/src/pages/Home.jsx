@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
-import { verifyToken } from '../utils/verifyToken';
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
+import { LineWave } from 'react-loader-spinner';
 
 function Home() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  const { authenticated, loading } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const verifiedToken = await verifyToken();
-      setAuthenticated(verifiedToken);
-    })();
-  }, []);
+    if (!loading) {
+      setIsLoading(false);
+      if (authenticated) {
+        navigate("/dashboard");
+      }
+    }
+  }, [loading, authenticated, navigate]);
 
-  if (authenticated) {
-    return <Navigate to="/dashboard" />
+  if (isLoading) {
+    return <LineWave />
   }
 
   return (

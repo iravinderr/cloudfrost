@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { createFolderAPI } from '../services/apis';
+import toast from 'react-hot-toast';
 
-function FolderCreation({ parentFolderId }) {
+function FolderCreation({ parentFolderId, refreshItems }) {
   const [folderName, setFolderName] = useState('');
 
   const handleFolderCreation = async (e) => {
@@ -15,10 +16,11 @@ function FolderCreation({ parentFolderId }) {
         },
       });
       if (response.data.success) {
-        window.location.reload();
+        toast.success("Folder created successfully!");
+        refreshItems(); // Refresh items after creation
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { uploadFileAPI } from "../services/apis";
+import toast from 'react-hot-toast';
 
-function FileUpload({ parentFolderId }) {
+function FileUpload({ parentFolderId, refreshItems }) {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -26,10 +27,11 @@ function FileUpload({ parentFolderId }) {
         },
       });
       if (response.data.success) {
-        window.location.reload();
+        toast.success("File uploaded successfully!");
+        refreshItems(); // Refresh items after upload
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 
