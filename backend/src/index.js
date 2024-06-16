@@ -16,3 +16,7 @@ await connectDB();
 app.listen(PORT, () => {
     console.log(`SERVER IS LIVE AT PORT ${PORT}`);
 });
+
+app.get("/", (req, res) => {
+    res.send(<h1>MyCloud</h1>);
+})
