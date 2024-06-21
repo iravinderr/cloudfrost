@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import { LineWave } from 'react-loader-spinner';
+import { Loader } from '../components';
 
 function Home() {
   const navigate = useNavigate();
-  const { authenticated, loading } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const { authenticated, isLoading } = useAuth();
+  const [localLoading, setLocalLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      setIsLoading(false);
+    if (!isLoading) {
+      setLocalLoading(false);
       if (authenticated) {
         navigate("/dashboard");
       }
     }
-  }, [loading, authenticated, navigate]);
+  }, [isLoading, authenticated, navigate]);
 
-  if (isLoading) {
-    return <LineWave />
+  if (localLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   return (

@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { PrivateRoute } from "./components";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import { Dashboard, Home, Login, Profile, Register } from "./pages";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import "./index.css";
-import { AuthProvider } from "./context/AuthContext.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -21,9 +21,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        {/* <AuthProvider>
+        <AuthProvider>
             <RouterProvider router={router} />
-        </AuthProvider> */}
-        <App />
+        </AuthProvider>
     </React.StrictMode>
   )

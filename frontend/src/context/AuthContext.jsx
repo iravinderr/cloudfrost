@@ -1,14 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import toast, { LoaderIcon } from 'react-hot-toast';
 import { refreshTokensAPI, verifyTokenAPI } from '../services/apis';
-import { useNavigate } from 'react-router-dom';
-import { LineWave, ThreeDots } from "react-loader-spinner";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,12 +28,9 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
         return true;
       } 
     } catch (error) {
-      // toast.error(error.response?.data?.message);
       return false;
     }
   };
@@ -50,26 +44,23 @@ export const AuthProvider = ({ children }) => {
         const tokensRefreshed = await refreshTokens();
         if (tokensRefreshed) {
           setAuthenticated(true);
-          navigate('/dashboard'); // Navigate to dashboard after successful refresh
         } else {
           setAuthenticated(false);
         }
       }
       setIsLoading(false);
     })();
-  }, [navigate]);
+  }, []);
 
   if (isLoading) {
-    return <LineWave />; // Or a spinner component
+    return <LoaderIcon />
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

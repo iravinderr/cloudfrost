@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { loginAPI } from "../services/apis";
 import toast from "react-hot-toast";
-import { LineWave } from "react-loader-spinner";
+import useAuthNavigation from "../hooks/AuthNavigation";
+import { Loader } from "../components";
 
 function Login() {
+  const { setAuthenticated } = useAuthNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,11 +28,9 @@ function Login() {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message);
-        localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
         setLoading(false);
-        navigate("/dashboard");
+        toast.success(response.data.message);
+        setAuthenticated(true);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -43,9 +41,9 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
-  // if (loading) {
-  //   return <LineWave color="black" />
-  // }
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="login">

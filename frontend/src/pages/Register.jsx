@@ -6,6 +6,7 @@ import {
   confirmRegistrationAPI,
 } from "../services/apis";
 import toast from "react-hot-toast";
+import { Loader } from "../components";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -14,20 +15,31 @@ function Register() {
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post(sendRegistrationOtpAPI, {
-        fullName,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        sendRegistrationOtpAPI,
+        {
+          fullName,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.data.success) {
         setIsOtpSent(true);
         toast.success(response.data.message);
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -36,16 +48,26 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post(confirmRegistrationAPI, {
-        email,
-        otp,
-        fullName,
-        password,
-      });
+      const response = await axios.post(
+        confirmRegistrationAPI,
+        {
+          email,
+          otp,
+          fullName,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.data.success) {
         navigate("/login");
         toast.success(response.data.message);
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -55,6 +77,10 @@ function Register() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="register">
@@ -75,14 +101,14 @@ function Register() {
           />
 
           <input
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button type="button" onClick={togglePasswordVisibility}>
-            {showPassword ? 'Hide Passowrd' : 'Show Password'}
+            {showPassword ? "Hide Passowrd" : "Show Password"}
           </button>
 
           <button type="submit">Register</button>

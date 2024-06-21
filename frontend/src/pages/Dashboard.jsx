@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 import ContextMenu from "../components/ContextMenu";
-import Modal from "../components/Modal"; // Import the modal component
+import Modal from "../components/Modal";
 import toast from "react-hot-toast";
-import { LineWave } from "react-loader-spinner";
+import { Loader } from "../components";
 
 function Dashboard() {
   const [items, setItems] = useState([]);
@@ -14,7 +14,6 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const { parentFolderId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const fetchItems = async () => {
     try {
@@ -78,7 +77,7 @@ function Dashboard() {
   // };
 
   if (loading) {
-    return <LineWave color="black" />;
+    return <Loader />;
   }
 
   return (

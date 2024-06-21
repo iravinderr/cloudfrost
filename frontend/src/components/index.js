@@ -1,18 +1,14 @@
-import FileList from "./FileList";
 import FileUpload from "./FileUpload";
 import FolderCreation from "./FolderCreation";
-import FolderList from "./FolderList";
-import LogoutButton from "./LogoutButton";
-import Navbar from "./Navbar";
+import Header from "./Header/Header";
 import PrivateRoute from "./PrivateRoute";
+import Loader from "./Loader";
 
 
 export {
-    FileList,
     FileUpload,
     FolderCreation,
-    FolderList,
-    LogoutButton,
-    Navbar,
-    PrivateRoute
+    Header,
+    PrivateRoute,
+    Loader
 }

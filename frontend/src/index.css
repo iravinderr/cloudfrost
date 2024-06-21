@@ -67,12 +67,12 @@ button {
   background-color: #eaeaea;
 }
 
-.navbar a {
+.Header a {
   color: white;
   padding: 10px;
 }
 
-.navbar a:hover {
+.Header a:hover {
   background-color: #555;
 }
 
