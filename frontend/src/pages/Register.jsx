@@ -74,10 +74,6 @@ function Register() {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   if (loading) {
     return <Loader />
   }
@@ -107,7 +103,7 @@ function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="button" onClick={togglePasswordVisibility}>
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? "Hide Passowrd" : "Show Password"}
           </button>
 

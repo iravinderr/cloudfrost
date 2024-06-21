@@ -1,5 +1,5 @@
-const backend_host = `http://localhost:4000`;
-// const backend_host = import.meta.env.VITE_BACKEND_HOST;
+// const backend_host = `http://localhost:4000`;
+const backend_host = import.meta.env.VITE_BACKEND_HOST;
 const api_version = '/api/v1';
 const base_url = `${backend_host}${api_version}/user`;
 

@@ -6,6 +6,7 @@ import { ErrorResponse } from "../utils/responses.utils.js";
 
 export const verifyToken = asyncHandler(async (req, res, next) => {
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "") || req.body?.accessToken;
+    console.log("token -> ", token);
     if (!token) {
         return ErrorResponse(res, 401, "Unauthorized request");
     }
