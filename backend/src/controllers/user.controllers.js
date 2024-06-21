@@ -68,7 +68,9 @@ export const login = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: true,
-        sameSite: 'None'
+        sameSite: 'None',
+        domain: 'https://cloudfrost.vercel.app',
+        path: '/'
     }
 
     return res.status(200)
