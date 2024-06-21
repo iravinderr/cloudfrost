@@ -20,11 +20,17 @@ function Dashboard() {
       const folderRes = await axios.get(getFoldersAPI, {
         withCredentials: true,
         params: { parentFolderId },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
 
       const fileRes = await axios.get(getFilesAPI, {
         withCredentials: true,
         params: { parentFolderId },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
 
       if (folderRes.data.success && fileRes.data.success) {          
@@ -72,17 +78,12 @@ function Dashboard() {
     setSelectedFile(null);
   };
 
-  // const handleBackClick = () => {
-  //   navigate(-1);
-  // };
-
   if (loading) {
     return <Loader />;
   }
 
   return (
     <div onContextMenu={handleRightClick} className="w-screen h-screen p-8">
-      {/* <button onClick={handleBackClick}>Back</button> */}
       <div className="item-list">
         {items.map((item) =>
           item.type === "folder" ? (

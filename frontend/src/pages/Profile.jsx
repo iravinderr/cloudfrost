@@ -22,6 +22,9 @@ function Profile() {
     try {
       const response = await axios.get(getProfileAPI, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
 
       if (response.data.success) {
@@ -47,6 +50,7 @@ function Profile() {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }
       });
       if (response.data.success) {

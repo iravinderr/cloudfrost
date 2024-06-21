@@ -9,11 +9,11 @@ function FolderCreation({ parentFolderId, refreshItems }) {
   const handleFolderCreation = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("accessToken");
       const response = await axios.post(createFolderAPI, { name: folderName, parentFolderId }, {
+        withCredentials: true,
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
       if (response.data.success) {
         toast.success("Folder created successfully!");

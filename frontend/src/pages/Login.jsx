@@ -29,8 +29,10 @@ function Login() {
 
       if (response.data.success) {
         setLoading(false);
-        toast.success(response.data.message);
         setAuthenticated(true);
+        toast.success(response.data.message);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
       }
     } catch (error) {
       toast.error(error.response.data.message);

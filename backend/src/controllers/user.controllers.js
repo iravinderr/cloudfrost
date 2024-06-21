@@ -104,7 +104,7 @@ export const logout = asyncHandler(async (req, res) => {
 // ================================================== TOKEN CONTROLLERS ==================================================
 
 export const refreshTokens = asyncHandler(async (req, res) => {
-    const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+    const incomingRefreshToken = req.cookies?.refreshToken || req.header("Authorization")?.replace("Bearer ", "") || req.body?.refreshToken;
 
     if (!incomingRefreshToken) {
         return ErrorResponse(res, 401, "Unauthorised request");

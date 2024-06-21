@@ -19,12 +19,12 @@ function FileUpload({ parentFolderId, refreshItems }) {
     formData.append("parentFolderId", parentFolderId);
 
     try {
-      const token = localStorage.getItem("accessToken");
       const response = await axios.post(uploadFileAPI, formData, {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
       if (response.data.success) {
         toast.success("File uploaded successfully!");

@@ -16,6 +16,8 @@ function LogoutButton() {
       if (response.data.success) {
         setAuthenticated(false);
         navigate('/');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       }
     } catch (error) {
       console.error(error);

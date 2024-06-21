@@ -13,6 +13,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(verifyTokenAPI, null, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
       });
       return response.data.success;
     } catch (error) {
@@ -23,7 +26,10 @@ export const AuthProvider = ({ children }) => {
   const refreshTokens = async () => {
     try {
       const response = await axios.post(refreshTokensAPI, null, {
-        withCredentials: true
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
+        }
       });
 
       if (response.data.success) {
