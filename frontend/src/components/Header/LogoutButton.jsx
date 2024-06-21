@@ -2,16 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logoutAPI } from '../../services/apis';
-import { useAuth } from '../../context/AuthContext';
+import useAuthNavigation from '../../hooks/AuthNavigation';
 
 function LogoutButton() {
-  const { setAuthenticated } = useAuth();
+  const { setAuthenticated } = useAuthNavigation();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await axios.post(logoutAPI, null, {
-        withCredentials: true
+        withCredentials: true,
       });
       if (response.data.success) {
         setAuthenticated(false);
