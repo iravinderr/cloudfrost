@@ -7,6 +7,7 @@ import {
 } from "../services/apis";
 import toast from "react-hot-toast";
 import { Loader } from "../components";
+import { postRequestAxios } from "../services/requests";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -22,19 +23,10 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        sendRegistrationOtpAPI,
-        {
-          fullName,
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const reqBody = { fullName, email, password };
+      const contentType = "multipart/form-data";
+
+      const response = await postRequestAxios(sendRegistrationOtpAPI, reqBody, null, null, contentType);
 
       if (response.data.success) {
         setIsOtpSent(true);
@@ -43,6 +35,7 @@ function Register() {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 
@@ -50,20 +43,11 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        confirmRegistrationAPI,
-        {
-          email,
-          otp,
-          fullName,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const reqBody = { email, otp, fullName, password };
+      const contentType = "multipart/form-data";
+
+      const response = await postRequestAxios(confirmRegistrationAPI, reqBody, null, null, contentType);
+
       if (response.data.success) {
         navigate("/login");
         toast.success(response.data.message);
@@ -71,6 +55,7 @@ function Register() {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 

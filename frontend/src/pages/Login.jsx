@@ -4,6 +4,7 @@ import { loginAPI } from "../services/apis";
 import toast from "react-hot-toast";
 import useAuthNavigation from "../hooks/AuthNavigation";
 import { Loader } from "../components";
+import { postRequestAxios } from "../services/requests";
 
 function Login() {
   const { setAuthenticated } = useAuthNavigation();
@@ -16,16 +17,10 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        loginAPI,
-        { email, password },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const reqBody = { email, password };
+      const contentType = "multipart/form-data";
+
+      const response = await postRequestAxios(loginAPI, reqBody, null, null, contentType);
 
       if (response.data.success) {
         setLoading(false);
@@ -36,6 +31,7 @@ function Login() {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 

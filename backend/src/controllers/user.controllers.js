@@ -223,7 +223,11 @@ export const updateProfile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { fullName, phone, gender, DOB } = req.body;
 
+    if (!fullName || !phone || !gender || !DOB) {
+        return ErrorResponse(res, 400,  "Fill all the details");
+    }
+
     const user = await USER.findByIdAndUpdate(userId, { fullName, phone, gender, DOB }, { new: true }).select("-password -refreshToken");
 
-    return SuccessResponse(res, "", user);
+    return SuccessResponse(res, "Details updated successfully", user);
 });

@@ -30,7 +30,7 @@ function Header() {
   ];
   
   return (
-    <header>
+    <header className="sticky top-0">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-RaisinBlack gap-2">
         <div className="w-1/3 flex justify-center items-center  ">
           <Link to="/">Cloudfrost</Link>

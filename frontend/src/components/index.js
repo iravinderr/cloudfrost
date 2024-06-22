@@ -3,6 +3,7 @@ import FolderCreation from "./FolderCreation";
 import Header from "./Header/Header";
 import PrivateRoute from "./PrivateRoute";
 import Loader from "./Loader";
+import Modal from "./Modal";
 
 
 export {
@@ -10,5 +11,6 @@ export {
     FolderCreation,
     Header,
     PrivateRoute,
-    Loader
+    Loader,
+    Modal
 }

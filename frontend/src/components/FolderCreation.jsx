@@ -17,6 +17,7 @@ function FolderCreation({ parentFolderId, refreshItems }) {
       });
       if (response.data.success) {
         toast.success("Folder created successfully!");
+        setFolderName(''); // Clear input field
         refreshItems(); // Refresh items after creation
       }
     } catch (error) {

@@ -28,7 +28,8 @@ function FileUpload({ parentFolderId, refreshItems }) {
       });
       if (response.data.success) {
         toast.success("File uploaded successfully!");
-        refreshItems(); // Refresh items after upload
+        setFile(null); // Clear file input
+        refreshItems();
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred.");
