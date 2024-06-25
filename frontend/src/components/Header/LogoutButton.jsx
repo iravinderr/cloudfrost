@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logoutAPI } from '../../services/apis';
 import useAuthNavigation from '../../hooks/AuthNavigation';
+import toast from 'react-hot-toast';
 
 function LogoutButton() {
   const { setAuthenticated } = useAuthNavigation();
@@ -16,10 +17,12 @@ function LogoutButton() {
       if (response.data.success) {
         setAuthenticated(false);
         navigate('/');
+        toast.success(response.data.message);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
       }
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error(error);
     }
   };
