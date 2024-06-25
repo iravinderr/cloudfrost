@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import toast, { LoaderIcon } from 'react-hot-toast';
-import { refreshTokensAPI, verifyTokenAPI } from '../services/apis';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import axios from "axios";
+import toast, { LoaderIcon } from "react-hot-toast";
+import { refreshTokensAPI, verifyTokenAPI } from "../services/apis";
 
 const AuthContext = createContext();
 
