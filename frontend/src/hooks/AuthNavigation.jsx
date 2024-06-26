@@ -9,8 +9,6 @@ const useAuthNavigation = () => {
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
-    } else {
-      navigate("/");
     }
   }, [authenticated, navigate]);
 
