@@ -21,8 +21,10 @@ export default function StorageInfo() {
 
   return (
   <div className="text-white">
-   {data && <p>Available Space : {storageInfo.availableStorage} MB </p>}
-   {data && <p>Total Space : {storageInfo.totalStorage} MB </p>}
+   {storageInfo && (
+    <p>Available Space : {storageInfo.availableStorage} MB </p>
+    )}
+   {storageInfo && <p>Total Space : {storageInfo.totalStorage} MB </p>}
     </div>
 );
 }

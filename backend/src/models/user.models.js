@@ -41,14 +41,14 @@ const userSchema = new Schema(
         totalStorage: {
             type: Number,
             required: true,
-            default: 10000000
+            default: 5000000
         },
         availableStorage: {
             type: Number,
             required: true,
-            default: 10000000,
+            default: 5000000,
             min: 0,
-            max: 10000000,
+            max: 5000000,
         }
     },
 
