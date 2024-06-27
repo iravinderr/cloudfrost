@@ -38,15 +38,17 @@ const userSchema = new Schema(
         DOB: {
             type: Date
         },
-        storageLimit: {
+        totalStorage: {
             type: Number,
             required: true,
-            default: 50
+            default: 10000000
         },
         availableStorage: {
             type: Number,
             required: true,
-            default: 50
+            default: 10000000,
+            min: 0,
+            max: 10000000,
         }
     },
 

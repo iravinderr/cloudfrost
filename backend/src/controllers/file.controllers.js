@@ -1,26 +1,37 @@
 import { FILE } from "../models/file.models.js";
+import { USER } from "../models/user.models.js";
 import { deleteFromCloudinary, uploadToCloudinary } from "../utils/cloudinary.utils.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse, SuccessResponse } from "../utils/responses.utils.js";
+import fs from "fs";
 
 
 export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     const { parentFolderId } = req.body;
     const file = req.file;
-    if (!req.file) {
+    if (!file) {
         return ErrorResponse(res, 400, "Select a file");
     }
 
     const fileName = file.originalname.split(".")[0];
-    const fileRes = await FILE.findOne({ name: fileName });
+    const fileRes = await FILE.findOne({ name: fileName, parentFolderId, userId });
     if (fileRes) {
-        return ErrorResponse(res, "File already exists with the name");
+        fs.unlinkSync(file.path);
+        return ErrorResponse(res, 400, "File already exists with the name");
+    }
+    
+    const user = await USER.findById(userId);
+    if (file.size > user.availableStorage) {
+        fs.unlinkSync(file.path);
+        return ErrorResponse(res, 400, "File size exceeds the available storage limit");
     }
 
     const uploadRes = await uploadToCloudinary(file.path);
 
-    await FILE.create({ name: fileName, url: uploadRes.secure_url, parentFolderId, userId });
+    await FILE.create({ name: fileName, url: uploadRes.secure_url, publicId: uploadRes.public_id, size: file.size, parentFolderId, userId });
+    user.availableStorage -= file.size;
+    await user.save({ validateBeforeSave: false });
 
     return SuccessResponse(res, "File uploaded");
 });
@@ -51,6 +62,7 @@ export const renameFile = asyncHandler(async (req, res) => {
 });
 
 export const deleteFile = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
     const fileId = req.query.fileId;
 
     const file = await FILE.findById(fileId);
@@ -58,9 +70,8 @@ export const deleteFile = asyncHandler(async (req, res) => {
         return ErrorResponse(res, 404, "File does not exists");
     }
 
-    const publicId = file.url.split("/").splice(-2).join("/").split(".")[0];
-
-    await deleteFromCloudinary(publicId);
+    await deleteFromCloudinary(file.publicId);
+    await USER.findByIdAndUpdate(userId, { $inc: { availableStorage: file.size } });
     await FILE.findByIdAndDelete(fileId);
 
     return SuccessResponse(res, "File deleted");

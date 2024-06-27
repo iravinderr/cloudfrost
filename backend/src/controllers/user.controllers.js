@@ -231,3 +231,20 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
     return SuccessResponse(res, "Details updated successfully", user);
 });
+
+
+export const getStorageInfo = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
+
+    const user = await USER.findById(userId);
+    if (!user) {
+        return ErrorResponse(res, 404, "User not found");
+    }
+
+    const storageInfo = {
+        totalStorage: user.totalStorage,
+        availableStorage: user.availableStorage
+    }
+
+    return SuccessResponse(res, "", storageInfo);
+});

@@ -10,9 +10,18 @@ const fileSchema = new Schema(
             type: String,
             required: true
         },
+        publicId: {
+            type: String,
+            required: true
+        },
+        size: {
+            type: Number,
+            required: true
+        },
         parentFolderId: {
             type: Schema.Types.ObjectId,
             ref: "FOLDER",
+            required: true,
             default: null
         },
         userId: {

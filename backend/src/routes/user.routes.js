@@ -5,6 +5,7 @@ import {
     changePassword,
     confirmRegistration,
     getProfile,
+    getStorageInfo,
     login,
     logout,
     refreshTokens,
@@ -60,10 +61,14 @@ router.post("/validate-reset-password-otp", upload.none(), validateResetPassword
 router.post("/reset-password", upload.none(), resetPassword);
 
 
-
+// GET PROFILE DETAILS
 router.get("/get-profile", verifyToken, getProfile);
 
+// UPDATE PROFILE DETAILS
 router.put("/update-profile", verifyToken, upload.none(), updateProfile);
+
+// GET STORAGE INFO
+router.get("/get-storage-info", verifyToken, getStorageInfo);
 
 
 export default router;

@@ -17,6 +17,7 @@ export const validateResetPasswordOtpAPI = `${base_url}/validate-reset-password-
 export const resetPasswordAPI = `${base_url}/reset-password`;
 export const getProfileAPI = `${base_url}/get-profile`;
 export const updateProfileAPI = `${base_url}/update-profile`;
+export const getStorageInfoAPI = `${base_url}/get-storage-info`;
 
 // FOLDER APIs
 export const createFolderAPI = `${base_url}/folder/create`;
