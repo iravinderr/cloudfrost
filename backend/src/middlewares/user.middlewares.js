@@ -9,10 +9,10 @@ export const verifyToken = asyncHandler(async (req, res, next) => {
     if (!token) {
         return ErrorResponse(res, 401, "Unauthorized request");
     }
-
+    
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
-    const user = await USER.findById(decodedToken?._id).select("-password -refreshToken -__v");
+    
+    const user = await USER.findById(decodedToken?._id).select("-password -refreshToken -totalStorage -availableStorage -__v");
     if (!user) {
         return ErrorResponse(res, 401, "Session expired. Login again.");
     }

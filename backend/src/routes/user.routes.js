@@ -4,6 +4,7 @@ import { verifyToken } from "../middlewares/user.middlewares.js";
 import { 
     changePassword,
     confirmRegistration,
+    deleteAccount,
     getProfile,
     getStorageInfo,
     login,
@@ -59,6 +60,9 @@ router.post("/validate-reset-password-otp", upload.none(), validateResetPassword
 
 // RESET ACCOUNT PASSWORD
 router.post("/reset-password", upload.none(), resetPassword);
+
+// DELETE ACCOUNT
+router.delete("/delete-account", verifyToken, deleteAccount);
 
 
 // GET PROFILE DETAILS

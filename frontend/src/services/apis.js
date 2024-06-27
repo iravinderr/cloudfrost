@@ -18,6 +18,7 @@ export const resetPasswordAPI = `${base_url}/reset-password`;
 export const getProfileAPI = `${base_url}/get-profile`;
 export const updateProfileAPI = `${base_url}/update-profile`;
 export const getStorageInfoAPI = `${base_url}/get-storage-info`;
+export const deleteAccountAPI = `${base_url}/delete-account`;
 
 // FOLDER APIs
 export const createFolderAPI = `${base_url}/folder/create`;

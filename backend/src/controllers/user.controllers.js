@@ -3,6 +3,9 @@ import { OTP } from "../models/otp.models.js";
 import { USER } from "../models/user.models.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { SuccessResponse, ErrorResponse } from "../utils/responses.utils.js";
+import { FOLDER } from "../models/folder.models.js";
+import { FILE } from "../models/file.models.js";
+import { deleteFromCloudinary } from "../utils/cloudinary.utils.js";
 
 
 // ================================================== REGISTRATION CONTROLLERS ==================================================
@@ -210,6 +213,24 @@ export const resetPassword = asyncHandler(async (req, res) => {
     await user.save({validateBeforeSave: false});
 
     return SuccessResponse(res, "Password reset successfully");
+});
+
+
+// ================================================== DELETE ACCOUNT CONTROLLERS ==================================================
+
+export const deleteAccount = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
+
+    await USER.findByIdAndDelete(userId);
+    await FOLDER.deleteMany({ userId });
+
+    const files = await FILE.find({ userId });
+    files.forEach(async (file) => {
+        await deleteFromCloudinary(file.publicId);
+        await FILE.findByIdAndDelete(file._id);
+    });
+
+    return SuccessResponse(res, "Account deleted");
 });
 
 

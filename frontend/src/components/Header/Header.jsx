@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import { useAuth } from "../../context/AuthContext";
+import DeleteAccount from "./DeleteAccount";
+import ConfirmDeletion from "./ConfirmDeletion";
 
 function Header() {
+  const [showConfirmDeletion, setShowCofirmDeletion] = useState(false);
   const { authenticated } = useAuth();
 
   const navItems = [
@@ -32,10 +35,10 @@ function Header() {
   return (
     <header className="sticky top-0">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-RaisinBlack gap-2">
-        <div className="w-1/3 flex justify-center items-center  ">
+        <div className="w-1/2 flex justify-center items-center  ">
           <Link to="/">Cloudfrost</Link>
         </div>
-        <ul className="w-1/3 flex justify-center items-center">
+        <ul className="w-1/2 flex justify-center items-center">
           {navItems.map((item) => 
             item.active ? (
               <li key={item.name}>
@@ -48,7 +51,13 @@ function Header() {
               <LogoutButton />
             </li>
           )}
+          {authenticated && (
+            <li>
+              {!showConfirmDeletion ? <DeleteAccount setShowCofirmDeletion={setShowCofirmDeletion} /> : <ConfirmDeletion />}
+            </li>
+          )}
         </ul>
+        
       </nav>
     </header>
   );

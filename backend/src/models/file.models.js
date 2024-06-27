@@ -21,7 +21,6 @@ const fileSchema = new Schema(
         parentFolderId: {
             type: Schema.Types.ObjectId,
             ref: "FOLDER",
-            required: true,
             default: null
         },
         userId: {
