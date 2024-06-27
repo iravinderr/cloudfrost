@@ -263,8 +263,8 @@ export const getStorageInfo = asyncHandler(async (req, res) => {
     }
 
     const storageInfo = {
-        totalStorage: user.totalStorage,
-        availableStorage: user.availableStorage
+        totalStorage: user.totalStorage/1000000,
+        availableStorage: (user.availableStorage/1000000).toPrecision(3)
     }
 
     return SuccessResponse(res, "", storageInfo);

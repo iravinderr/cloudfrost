@@ -5,7 +5,7 @@ import { logoutAPI } from '../../services/apis';
 import useAuthNavigation from '../../hooks/AuthNavigation';
 import toast from 'react-hot-toast';
 
-function LogoutButton() {
+export default function LogoutButton() {
   const { setAuthenticated } = useAuthNavigation();
   const navigate = useNavigate();
 
@@ -36,5 +36,3 @@ function LogoutButton() {
     </button>
   );
 }
-
-export default LogoutButton;

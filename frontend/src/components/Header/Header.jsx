@@ -4,6 +4,7 @@ import LogoutButton from "./LogoutButton";
 import { useAuth } from "../../context/AuthContext";
 import DeleteAccount from "./DeleteAccount";
 import ConfirmDeletion from "./ConfirmDeletion";
+import StorageInfo from "./StorageInfo";
 
 function Header() {
   const [showConfirmDeletion, setShowCofirmDeletion] = useState(false);
@@ -38,7 +39,7 @@ function Header() {
         <div className="w-1/2 flex justify-center items-center  ">
           <Link to="/">Cloudfrost</Link>
         </div>
-        <ul className="w-1/2 flex justify-center items-center">
+        <ul className="w-1/2 flex justify-evenly items-center">
           {navItems.map((item) => 
             item.active ? (
               <li key={item.name}>
@@ -54,6 +55,11 @@ function Header() {
           {authenticated && (
             <li>
               {!showConfirmDeletion ? <DeleteAccount setShowCofirmDeletion={setShowCofirmDeletion} /> : <ConfirmDeletion />}
+            </li>
+          )}
+          {authenticated && (
+            <li>
+              <StorageInfo />
             </li>
           )}
         </ul>
