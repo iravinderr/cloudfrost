@@ -8,7 +8,6 @@ import fs from "fs";
 
 export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    console.log(req.body);
     const { parentFolderId } = req.body;
     const file = req.file;
     if (!file) {

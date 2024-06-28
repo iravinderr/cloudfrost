@@ -12,7 +12,6 @@ function FolderCreation({ parentFolderId, refreshItems, setNewCreation }) {
   const handleFolderCreation = async (e) => {
     e.preventDefault();
     try {
-      console.log("parentFolderId", parentFolderId);
       const reqBody = { name: folderName, parentFolderId };
       const response = await postRequestAxios(createFolderAPI, reqBody);
       if (response.data.success) {

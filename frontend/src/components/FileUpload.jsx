@@ -18,7 +18,6 @@ function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-    console.log("parentFolderId", parentFolderId);
     formData.append("parentFolderId", parentFolderId);
     const contentType = "multipart/form-data";
     try {
