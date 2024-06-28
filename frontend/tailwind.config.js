@@ -7,11 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        RaisinBlack: "#211A1D",
-        ElectricIndigo: "#6320EE",
-        SlateBlue: "#8075FF",
-        Magnolia: "#F8F0FB",
-        AshGray: "#CAD5CA",
+        CustomBlack: "#252627",
+        CustomRed: "#BB0A21",
+        CustomBlue: "#4B88A2",
+        CustomWhiteSnow: "#FFF9FB",
         ModalBG: "rgba(0, 0, 0, 0.5)"
       }
     },

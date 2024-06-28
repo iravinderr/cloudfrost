@@ -10,5 +10,5 @@ export {
     Home,
     Login,
     Profile,
-    Register
+    Register,
 }

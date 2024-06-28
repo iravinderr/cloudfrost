@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { loginAPI } from "../services/apis";
 import toast from "react-hot-toast";
 import useAuthNavigation from "../hooks/AuthNavigation";
-import { Loader } from "../components";
+import { BlueButton, Input, Loader } from "../components";
 import { postRequestAxios } from "../services/requests";
 
 function Login() {
@@ -12,6 +11,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(null);
+
+  const togglePasswordVisiblity = () => setShowPassword(!showPassword);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -41,26 +42,14 @@ function Login() {
 
   return (
     <div className="w-screen h-screen p-8">
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <form>
+        <Input type={"email"} placeholder={"Email"} value={email} onChangeHandler={setEmail} />
+        
+        <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} onChangeHandler={setPassword} />
 
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
 
-        <button type="button" onClick={() => setShowPassword(!showPassword)}>
-          {showPassword ? "Hide Passowrd" : "Show Password"}
-        </button>
-
-        <button type="submit">Login</button>
+        <BlueButton onClick={handleLogin}>Login</BlueButton>
       </form>
     </div>
   );

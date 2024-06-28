@@ -4,7 +4,9 @@ import Header from "./Header/Header";
 import PrivateRoute from "./PrivateRoute";
 import Loader from "./Loader";
 import Modal from "./Modal";
-import RedButton from "./RedButton";
+import RedButton from "./Buttons/RedButton";
+import BlueButton from "./Buttons/BlueButton";
+import Input from "./Input";
 
 
 export {
@@ -14,5 +16,7 @@ export {
     PrivateRoute,
     Loader,
     Modal,
-    RedButton
+    RedButton,
+    BlueButton,
+    Input
 }

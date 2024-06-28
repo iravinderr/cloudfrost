@@ -29,18 +29,6 @@ input {
   border-radius: 5px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #1C48F5;
-  border: 1px solid black;
-  border-radius: 5px;
-  color: white;
-}
-
-
 .Header a {
   color: white;
   padding: 10px;

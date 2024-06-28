@@ -5,20 +5,22 @@ import {
   confirmRegistrationAPI,
 } from "../services/apis";
 import toast from "react-hot-toast";
-import { Loader } from "../components";
+import { BlueButton, Input, Loader } from "../components";
 import { postRequestAxios } from "../services/requests";
 
 function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [OTP, setOTP] = useState("");
+  const [isOTPSent, setIsOTPSent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
 
-  const handleSendOtp = async (e) => {
+  const togglePasswordVisiblity = () => setShowPassword(!showPassword);
+
+  const handleSendOTP = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -28,7 +30,7 @@ function Register() {
       const response = await postRequestAxios(sendRegistrationOtpAPI, reqBody, null, null, contentType);
 
       if (response.data.success) {
-        setIsOtpSent(true);
+        setIsOTPSent(true);
         toast.success(response.data.message);
         setLoading(false);
       }
@@ -42,7 +44,7 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const reqBody = { email, otp, fullName, password };
+      const reqBody = { email, OTP, fullName, password };
       const contentType = "multipart/form-data";
 
       const response = await postRequestAxios(confirmRegistrationAPI, reqBody, null, null, contentType);
@@ -64,45 +66,23 @@ function Register() {
 
   return (
     <div className="w-screen h-screen p-8">
-      {!isOtpSent ? (
-        <form onSubmit={handleSendOtp}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
+      {!isOTPSent ? (
+        <form>
+          <Input type={"text"} placeholder={"Full Name"} value={fullName} onChangeHandler={setFullName} />
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <Input type={"email"} placeholder={"Email"} value={email} onChangeHandler={setEmail} />
 
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} onChangeHandler={setPassword} />
 
-          <button type="button" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? "Hide Passowrd" : "Show Password"}
-          </button>
+          <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
 
-          <button type="submit">Register</button>
+          <BlueButton onClick={handleSendOTP} >Register</BlueButton>
         </form>
       ) : (
-        <form onSubmit={handleRegister}>
-          <input
-            type="text"
-            placeholder="OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
+        <form>
+          <Input type={"text"} placeholder={"OTP"} value={OTP} onChangeHandler={setOTP} />
 
-          <button type="submit">Confirm Registeration</button>
+          <BlueButton onClick={handleRegister} >Confirm Registeration</BlueButton>
         </form>
       )}
     </div>

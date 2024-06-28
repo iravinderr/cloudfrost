@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { Modal, Loader, FolderCreation, FileUpload } from "../components";
+import { Modal, Loader, FolderCreation, FileUpload, BlueButton } from "../components";
 import toast from "react-hot-toast";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 
@@ -85,8 +85,8 @@ function Dashboard() {
       </div>
 
       <div className="footer-buttons">
-        <button onClick={() => setSelectedFile({ type: "folder" })}>Create Folder</button>
-        <button onClick={() => setSelectedFile({ type: "file" })}>Upload File</button>
+        <BlueButton onClick={() => setSelectedFile({ type: "folder" })}>Create Folder</BlueButton>
+        <BlueButton onClick={() => setSelectedFile({ type: "file" })}>Upload File</BlueButton>
       </div>
 
       {selectedFile && selectedFile.type === "folder" && (
