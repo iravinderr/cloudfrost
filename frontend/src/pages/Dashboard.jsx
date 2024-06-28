@@ -56,13 +56,13 @@ function Dashboard() {
   }
 
   return (
-    <div className="w-screen h-screen p-8">
-      <div className="item-list">
+    <div className="w-screen h-screen p-8 flex flex-col gap-8">
+      <div className="flex flex-wrap gap-4">
         {items.map((item) =>
           item.type === "folder" ? (
             <div
               key={item._id}
-              className="folder-item"
+              className="p-4 w-[150px] h-[150px] flex justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]"
               onClick={() => navigate(`/dashboard/${item._id}`)}
             >
               {item.name}
@@ -70,7 +70,7 @@ function Dashboard() {
           ) : (
             <div
               key={item._id}
-              className="file-item flex flex-col"
+              className="p-4 w-[150px] h-[150px] flex flex-col justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]"
               onClick={() => setSelectedFile(item)}
             >
               <img

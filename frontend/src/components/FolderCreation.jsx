@@ -26,8 +26,7 @@ function FolderCreation({ parentFolderId, refreshItems }) {
   };
 
   return (
-    <div className="folder-creation">
-      <form onSubmit={handleFolderCreation}>
+      <form>
         <input
           type="text"
           placeholder="Folder Name"
@@ -35,9 +34,8 @@ function FolderCreation({ parentFolderId, refreshItems }) {
           onChange={(e) => setFolderName(e.target.value)}
           required
         />
-        <button type="submit">Create Folder</button>
+        <button onClick={handleFolderCreation} >Create Folder</button>
       </form>
-    </div>
   );
 }
 

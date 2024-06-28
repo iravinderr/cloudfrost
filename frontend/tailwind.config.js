@@ -11,7 +11,8 @@ export default {
         ElectricIndigo: "#6320EE",
         SlateBlue: "#8075FF",
         Magnolia: "#F8F0FB",
-        AshGray: "#CAD5CA"
+        AshGray: "#CAD5CA",
+        ModalBG: "rgba(0, 0, 0, 0.5)"
       }
     },
   },

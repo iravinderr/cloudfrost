@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import PrivateRoute from "./PrivateRoute";
 import Loader from "./Loader";
 import Modal from "./Modal";
-import CookieBanner from "./CookieBanner";
+import RedButton from "./RedButton";
 
 
 export {
@@ -14,5 +14,5 @@ export {
     PrivateRoute,
     Loader,
     Modal,
-    CookieBanner
+    RedButton
 }

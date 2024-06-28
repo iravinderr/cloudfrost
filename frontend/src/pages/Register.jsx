@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   sendRegistrationOtpAPI,
@@ -64,7 +63,7 @@ function Register() {
   }
 
   return (
-    <div className="register">
+    <div className="w-screen h-screen p-8">
       {!isOtpSent ? (
         <form onSubmit={handleSendOtp}>
           <input

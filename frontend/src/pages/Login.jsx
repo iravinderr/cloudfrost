@@ -40,7 +40,7 @@ function Login() {
   }
 
   return (
-    <div className="login">
+    <div className="w-screen h-screen p-8">
       <form onSubmit={handleLogin}>
         <input
           type="email"
