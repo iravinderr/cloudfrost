@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProfileAPI, updateProfileAPI } from "../services/apis";
 import { getRequestAxios, putRequestAxios } from "../services/requests";
-import { Loader } from "../components";
+import { Input, Loader } from "../components";
 import toast from "react-hot-toast";
 
 function Profile() {

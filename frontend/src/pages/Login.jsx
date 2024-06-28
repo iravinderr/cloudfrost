@@ -43,9 +43,9 @@ function Login() {
   return (
     <div className="w-screen h-screen p-8">
       <form>
-        <Input type={"email"} placeholder={"Email"} value={email} onChangeHandler={setEmail} />
+        <Input type={"email"} placeholder={"Email"} value={email} setValue={setEmail} />
         
-        <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} onChangeHandler={setPassword} />
+        <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} setValue={setPassword} />
 
         <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
 

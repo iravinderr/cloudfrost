@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  sendRegistrationOtpAPI,
-  confirmRegistrationAPI,
-} from "../services/apis";
+import { sendRegistrationOtpAPI, confirmRegistrationAPI } from "../services/apis";
 import toast from "react-hot-toast";
 import { BlueButton, Input, Loader } from "../components";
 import { postRequestAxios } from "../services/requests";
@@ -68,11 +65,11 @@ function Register() {
     <div className="w-screen h-screen p-8">
       {!isOTPSent ? (
         <form>
-          <Input type={"text"} placeholder={"Full Name"} value={fullName} onChangeHandler={setFullName} />
+          <Input type={"text"} placeholder={"Full Name"} value={fullName} setValue={setFullName} />
 
-          <Input type={"email"} placeholder={"Email"} value={email} onChangeHandler={setEmail} />
+          <Input type={"email"} placeholder={"Email"} value={email} setValue={setEmail} />
 
-          <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} onChangeHandler={setPassword} />
+          <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} setValue={setPassword} />
 
           <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
 
@@ -80,7 +77,7 @@ function Register() {
         </form>
       ) : (
         <form>
-          <Input type={"text"} placeholder={"OTP"} value={OTP} onChangeHandler={setOTP} />
+          <Input type={"text"} placeholder={"OTP"} value={OTP} setValue={setOTP} />
 
           <BlueButton onClick={handleRegister} >Confirm Registeration</BlueButton>
         </form>

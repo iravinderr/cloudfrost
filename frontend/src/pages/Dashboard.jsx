@@ -4,31 +4,21 @@ import axios from "axios";
 import { Modal, Loader, FolderCreation, FileUpload, BlueButton } from "../components";
 import toast from "react-hot-toast";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
+import { getRequestAxios } from "../services/requests";
 
 function Dashboard() {
   const [items, setItems] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [newCreation, setNewCreation] = useState(null);
+  const [showFile, setShowFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { parentFolderId } = useParams();
   const navigate = useNavigate();
 
   const fetchItems = async () => {
     try {
-      const folderRes = await axios.get(getFoldersAPI, {
-        withCredentials: true,
-        params: { parentFolderId },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const folderRes = await getRequestAxios(getFoldersAPI, {parentFolderId});
 
-      const fileRes = await axios.get(getFilesAPI, {
-        withCredentials: true,
-        params: { parentFolderId },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const fileRes = await getRequestAxios(getFilesAPI, {parentFolderId});
 
       if (folderRes.data.success && fileRes.data.success) {
         const combinedItems = [
@@ -43,7 +33,7 @@ function Dashboard() {
         setItems(combinedItems);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred.");
+      toast.error(error.response.data.message);
     }
   };
 
@@ -71,7 +61,7 @@ function Dashboard() {
             <div
               key={item._id}
               className="p-4 w-[150px] h-[150px] flex flex-col justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]"
-              onClick={() => setSelectedFile(item)}
+              onClick={() => setShowFile(item)}
             >
               <img
                 src={item.url}
@@ -84,27 +74,29 @@ function Dashboard() {
         )}
       </div>
 
-      <div className="footer-buttons">
-        <BlueButton onClick={() => setSelectedFile({ type: "folder" })}>Create Folder</BlueButton>
-        <BlueButton onClick={() => setSelectedFile({ type: "file" })}>Upload File</BlueButton>
+      <div className="sticky top-3/4 flex justify-center items-center">
+        <BlueButton onClick={() => setNewCreation({ type: "folder" })}>Create Folder</BlueButton>
+        <BlueButton onClick={() => setNewCreation({ type: "file" })}>Upload File</BlueButton>
       </div>
 
-      {selectedFile && selectedFile.type === "folder" && (
+      {newCreation && newCreation.type === "folder" && (
         <FolderCreation
           parentFolderId={parentFolderId}
           refreshItems={fetchItems}
+          setNewCreation={setNewCreation}
         />
       )}
 
-      {selectedFile && selectedFile.type === "file" && (
+      {newCreation && newCreation.type === "file" && (
         <FileUpload
           parentFolderId={parentFolderId}
           refreshItems={fetchItems}
+          setNewCreation={setNewCreation}
         />
       )}
 
-      {selectedFile && (
-        <Modal file={selectedFile} setSelectedFile={setSelectedFile} />
+      {showFile && (
+        <Modal file={showFile} setShowFile={setShowFile} />
       )}
     </div>
   );

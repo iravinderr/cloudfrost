@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { uploadFileAPI } from "../services/apis";
-import toast from 'react-hot-toast';
+import { postRequestAxios } from "../services/requests";
+import BlueButton from "./Buttons/BlueButton";
+import toast from "react-hot-toast";
+import Loader from "./Loader";
 
-function FileUpload({ parentFolderId, refreshItems }) {
+function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -12,35 +15,45 @@ function FileUpload({ parentFolderId, refreshItems }) {
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
-    if (!file) return;
-
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
+    console.log("parentFolderId", parentFolderId);
     formData.append("parentFolderId", parentFolderId);
-
+    const contentType = "multipart/form-data";
     try {
-      const response = await axios.post(uploadFileAPI, formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        }
-      });
+      const response = await postRequestAxios(
+        uploadFileAPI,
+        formData,
+        null,
+        undefined,
+        contentType
+      );
+      console.log("response -> ",response);
       if (response.data.success) {
-        toast.success("File uploaded successfully!");
-        setFile(null); // Clear file input
+        setLoading(false);
+        toast.success(response.data.message);
+        setNewCreation(null);
         refreshItems();
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred.");
+      setLoading(false);
+      toast.error(error.response.data.message);
     }
   };
 
+  if (loading) {
+    return <Loader />
+  }
+
   return (
-    <div className="file-upload">
-      <form onSubmit={handleFileUpload}>
+    <div
+      className="flex justify-center items-center w-full h-full z-50 fixed left-0 top-0 overflow-auto bg-ModalBG"
+      onClick={() => setNewCreation(null)}
+    >
+      <form className="z-50 bg-white" onClick={(e) => e.stopPropagation()}>
         <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+        <BlueButton onClick={handleFileUpload}>Upload File</BlueButton>
       </form>
     </div>
   );

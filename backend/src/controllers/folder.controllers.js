@@ -8,6 +8,10 @@ export const createFolder = asyncHandler(async (req, res) => {
     const { name, parentFolderId } = req.body;
     const userId = req.user?._id;
 
+    if (!name) {
+        return ErrorResponse(res, 400, "Folder name cannot be empty");
+    }
+
     const folder = await FOLDER.findOne({ name, parentFolderId, userId });
     if (folder) {
         return ErrorResponse(res, 400, "Folder already exists with the entered name");
