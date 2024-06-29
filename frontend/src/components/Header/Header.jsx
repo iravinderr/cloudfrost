@@ -65,10 +65,10 @@ function Header() {
   return (
     <header className="sticky top-0">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-CustomBlack gap-2">
-        <div className="w-1/2 flex justify-center items-center  ">
+        <div className="w-1/3 flex justify-center items-center  ">
           <Link to="/">Cloudfrost</Link>
         </div>
-        <ul className="w-1/2 flex justify-evenly items-center">
+        <ul className="w-2/3 flex justify-evenly items-center">
           {navItems.map((item) =>
             item.active ? (
               <li key={item.name}>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { Modal, Loader, FolderCreation, FileUpload, BlueButton } from "../components";
+import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Folder, File } from "../components";
 import toast from "react-hot-toast";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 import { getRequestAxios } from "../services/requests";
@@ -48,29 +47,8 @@ function Dashboard() {
   return (
     <div className="w-screen h-screen p-8 flex flex-col gap-8">
       <div className="flex flex-wrap gap-4">
-        {items.map((item) =>
-          item.type === "folder" ? (
-            <div
-              key={item._id}
-              className="p-4 w-[150px] h-[150px] flex justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]"
-              onClick={() => navigate(`/dashboard/${item._id}`)}
-            >
-              {item.name}
-            </div>
-          ) : (
-            <div
-              key={item._id}
-              className="p-4 w-[150px] h-[150px] flex flex-col justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]"
-              onClick={() => setShowFile(item)}
-            >
-              <img
-                src={item.url}
-                alt={item.name}
-                style={{ width: "120px", height: "120px", objectFit: "cover" }}
-              />
-              <div>{item.name}</div>
-            </div>
-          )
+        {items.map((item) => 
+          item.type === "folder" ? <Folder item={item} /> : <File item={item} setShowFile={setShowFile} />
         )}
       </div>
 
@@ -79,25 +57,11 @@ function Dashboard() {
         <BlueButton onClick={() => setNewCreation({ type: "file" })}>Upload File</BlueButton>
       </div>
 
-      {newCreation && newCreation.type === "folder" && (
-        <FolderCreation
-          parentFolderId={parentFolderId}
-          refreshItems={fetchItems}
-          setNewCreation={setNewCreation}
-        />
-      )}
+      { newCreation && newCreation.type === "folder" && <FolderCreation parentFolderId={parentFolderId} refreshItems={fetchItems} setNewCreation={setNewCreation} /> }
 
-      {newCreation && newCreation.type === "file" && (
-        <FileUpload
-          parentFolderId={parentFolderId}
-          refreshItems={fetchItems}
-          setNewCreation={setNewCreation}
-        />
-      )}
+      { newCreation && newCreation.type === "file" && <FileUpload parentFolderId={parentFolderId} refreshItems={fetchItems} setNewCreation={setNewCreation} /> }
 
-      {showFile && (
-        <Modal file={showFile} setShowFile={setShowFile} />
-      )}
+      { showFile && <Modal file={showFile} setShowFile={setShowFile} /> }
     </div>
   );
 }

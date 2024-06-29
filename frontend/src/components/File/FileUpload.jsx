@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { uploadFileAPI } from "../services/apis";
-import { postRequestAxios } from "../services/requests";
-import BlueButton from "./Buttons/BlueButton";
+import { uploadFileAPI } from "../../services/apis";
+import { postRequestAxios } from "../../services/requests";
+import BlueButton from "../Buttons/BlueButton";
 import toast from "react-hot-toast";
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
   const [file, setFile] = useState(null);

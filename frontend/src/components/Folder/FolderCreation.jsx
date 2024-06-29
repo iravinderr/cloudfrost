@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { createFolderAPI } from "../services/apis";
+import { createFolderAPI } from "../../services/apis";
 import toast from "react-hot-toast";
-import Input from "./Input";
-import BlueButton from "./Buttons/BlueButton";
-import { postRequestAxios } from "../services/requests";
+import Input from "../Input";
+import BlueButton from "../Buttons/BlueButton";
+import { postRequestAxios } from "../../services/requests";
 
 function FolderCreation({ parentFolderId, refreshItems, setNewCreation }) {
   const [folderName, setFolderName] = useState("");

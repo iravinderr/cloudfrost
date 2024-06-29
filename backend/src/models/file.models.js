@@ -18,6 +18,11 @@ const fileSchema = new Schema(
             type: Number,
             required: true
         },
+        type: {
+            type: String,
+            enum: ["image", "video"],
+            required: true,
+        },
         parentFolderId: {
             type: Schema.Types.ObjectId,
             ref: "FOLDER",
