@@ -28,14 +28,14 @@ function Dashboard() {
           ...fileRes.data.data.map((file) => ({ ...file, type: "file" })),
         ];
 
-        setLoading(false);
         setItems(combinedItems);
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
-
+  
   useEffect(() => {
     fetchItems();
   }, [parentFolderId]);

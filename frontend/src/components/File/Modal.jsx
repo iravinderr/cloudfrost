@@ -10,7 +10,8 @@ function Modal({ file, setShowFile }) {
         className="p-4 relative m-auto bg-white w-4/5 max-w-3xl" 
         onClick={(e) => e.stopPropagation()}
       >
-        <img src={file.url} alt={file.name} style={{ width: "100%" }} />
+        {file.fileType === "image" ? <img src={file.url} alt={file.name} style={{ width: "100%" }} /> : <video src={file.url} alt={file.name} style={{ width: "100%" }} ></video> }
+        
       </div>
     </div>
   );

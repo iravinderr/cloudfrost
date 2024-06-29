@@ -18,7 +18,7 @@ const fileSchema = new Schema(
             type: Number,
             required: true
         },
-        type: {
+        fileType: {
             type: String,
             enum: ["image", "video"],
             required: true,

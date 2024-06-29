@@ -16,7 +16,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
 
     const fileName = file.originalname.split(".")[0];
     const fileType = file.mimetype.split("/")[0];
-    const fileRes = await FILE.findOne({ name: fileName, type: fileType, parentFolderId, userId });
+    const fileRes = await FILE.findOne({ name: fileName, fileType , parentFolderId, userId });
     if (fileRes) {
         fs.unlinkSync(file.path);
         return ErrorResponse(res, 400, "File already exists with the name");
@@ -30,7 +30,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
 
     const uploadRes = await uploadToCloudinary(file.path);
 
-    await FILE.create({ name: fileName, url: uploadRes.secure_url, publicId: uploadRes.public_id, size: file.size, type: fileType, parentFolderId, userId });
+    await FILE.create({ name: fileName, url: uploadRes.secure_url, publicId: uploadRes.public_id, size: file.size, fileType, parentFolderId, userId });
     user.availableStorage -= file.size;
     await user.save({ validateBeforeSave: false });
 
