@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProfileAPI, updateProfileAPI } from "../services/apis";
 import { getRequestAxios, putRequestAxios } from "../services/requests";
-import { Input, Loader } from "../components";
+import { Loader } from "../components";
 import toast from "react-hot-toast";
 
 function Profile() {
@@ -28,20 +28,17 @@ function Profile() {
 
       if (response.data.success) {
         setProfile(response.data.data);
-
-        // Populate form data including DOB
         setFormData({
           fullName: response.data.data.fullName,
           email: response.data.data.email,
           phone: response.data.data.phone || "",
           gender: response.data.data.gender || "",
-          DOB: response.data.data.DOB ? new Date(response.data.data.DOB).toISOString().split('T')[0] : "", // Format DOB as ISO date string for input[type="date"]
+          DOB: response.data.data.DOB ? new Date(response.data.data.DOB).toISOString().split('T')[0] : ""
         });
-        
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred.");
+      toast.error(error.response.data.message);
       setLoading(false);
     }
   };
@@ -50,21 +47,18 @@ function Profile() {
     e.preventDefault();
     setLoading(true);
     try {
-      const accessToken = localStorage.getItem("accessToken");
       const contentType = "multipart/form-data";
-
-      // Exclude email from the formData before submission
       const { email, ...restFormData } = formData;
 
-      const response = await putRequestAxios(updateProfileAPI, restFormData, null, accessToken, contentType);
+      const response = await putRequestAxios(updateProfileAPI, restFormData, null, undefined, contentType);
       if (response.data.success) {
-        toast.success(response.data.message);
         setEditMode(false);
         fetchProfile();
         setLoading(false);
+        toast.success(response.data.message);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred.");
+      toast.error(error.response.data.message);
       setLoading(false);
     }
   };

@@ -1,22 +1,17 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
-import toast, { LoaderIcon } from "react-hot-toast";
 import { refreshTokensAPI, verifyTokenAPI } from "../services/apis";
+import { postRequestAxios } from "../services/requests";
+import { Loader } from "../components";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const verifyToken = async () => {
     try {
-      const response = await axios.post(verifyTokenAPI, null, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        }
-      });
+      const response = await postRequestAxios(verifyTokenAPI);
       return response.data.success;
     } catch (error) {
       return false;
@@ -25,17 +20,8 @@ export const AuthProvider = ({ children }) => {
 
   const refreshTokens = async () => {
     try {
-      const response = await axios.post(refreshTokensAPI, null, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
-        }
-      });
-
-      if (response.data.success) {
-        toast.success(response.data.message);
-        return true;
-      } 
+      const response = await postRequestAxios(refreshTokensAPI, null, null, localStorage.getItem("refreshToken"));
+      return response.data.success;
     } catch (error) {
       return false;
     }
@@ -54,16 +40,16 @@ export const AuthProvider = ({ children }) => {
           setAuthenticated(false);
         }
       }
-      setIsLoading(false);
+      setLoading(false);
     })();
   }, []);
 
-  if (isLoading) {
-    return <LoaderIcon />
+  if (loading) {
+    return <Loader />
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated, isLoading }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );

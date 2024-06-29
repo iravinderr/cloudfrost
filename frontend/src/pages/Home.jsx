@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom';
 import { Loader } from '../components';
+import useAuthNavigation from '../hooks/AuthNavigation';
 
 function Home() {
-  const navigate = useNavigate();
-  const { authenticated, isLoading } = useAuth();
-  const [localLoading, setLocalLoading] = useState(true);
+  const { loading } = useAuthNavigation();
 
-  useEffect(() => {
-    if (!isLoading) {
-      setLocalLoading(false);
-      if (authenticated) {
-        navigate("/dashboard");
-      }
-    }
-  }, [isLoading, authenticated, navigate]);
-
-  if (localLoading) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
+  if (loading) {
+    return <Loader />
   }
 
   return (
