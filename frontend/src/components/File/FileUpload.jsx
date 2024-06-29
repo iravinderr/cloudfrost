@@ -4,6 +4,7 @@ import { postRequestAxios } from "../../services/requests";
 import BlueButton from "../Buttons/BlueButton";
 import toast from "react-hot-toast";
 import Loader from "../Loader";
+import Input from "../Input";
 
 function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
   const [file, setFile] = useState(null);
@@ -51,7 +52,8 @@ function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
       onClick={() => setNewCreation(null)}
     >
       <form className="z-50 bg-white" onClick={(e) => e.stopPropagation()}>
-        <input type="file" onChange={handleFileChange} />
+        <Input type={"file"} setValue={setFile} />
+
         <BlueButton onClick={handleFileUpload}>Upload File</BlueButton>
       </form>
     </div>

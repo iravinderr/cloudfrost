@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Folder, File } from "../components";
 import toast from "react-hot-toast";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
@@ -9,11 +9,11 @@ function Dashboard() {
   const [items, setItems] = useState([]);
   const [newCreation, setNewCreation] = useState(null);
   const [showFile, setShowFile] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(null);
   const { parentFolderId } = useParams();
-  const navigate = useNavigate();
 
   const fetchItems = async () => {
+    setLoading(true);
     try {
       const folderRes = await getRequestAxios(getFoldersAPI, {parentFolderId});
 
@@ -33,6 +33,7 @@ function Dashboard() {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
   
@@ -48,7 +49,7 @@ function Dashboard() {
     <div className="w-screen h-screen p-8 flex flex-col gap-8">
       <div className="flex flex-wrap gap-4">
         {items.map((item) => 
-          item.type === "folder" ? <Folder item={item} /> : <File item={item} setShowFile={setShowFile} />
+          item.type === "folder" ? <Folder folder={item} /> : <File file={item} setShowFile={setShowFile} />
         )}
       </div>
 

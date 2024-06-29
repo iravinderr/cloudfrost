@@ -66,13 +66,13 @@ function Header() {
     <header className="sticky top-0">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-CustomBlack gap-2">
         <div className="w-1/3 flex justify-center items-center  ">
-          <Link to="/">Cloudfrost</Link>
+          <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md ">Cloudfrost</Link>
         </div>
         <ul className="w-2/3 flex justify-evenly items-center">
           {navItems.map((item) =>
             item.active ? (
               <li key={item.name}>
-                <NavLink to={item.path}>{item.name}</NavLink>
+                <NavLink className={({isActive}) => `p-3 text-white ${isActive ? `bg-[#555]` : ``} hover:bg-[#555] rounded-md`} to={item.path}>{item.name}</NavLink>
               </li>
             ) : null
           )}

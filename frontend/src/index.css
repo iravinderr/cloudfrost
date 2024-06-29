@@ -20,20 +20,3 @@ form {
   border: 2px solid black;
   border-radius: 5px;
 }
-
-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-.Header a {
-  color: white;
-  padding: 10px;
-}
-
-.Header a:hover {
-  background-color: #555;
-}

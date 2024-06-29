@@ -1,26 +1,27 @@
 import React from "react";
 
-function File({ item, setShowFile }) {
+function File({ file, setShowFile }) {
   return (
     <div
-      key={item._id}
+      key={file._id}
       className={`p-4 w-[150px] h-[150px] flex flex-col justify-center items-center cursor-pointer bg-white border-2 border-[#eaeaea] hover:bg-[#eaeaea]`}
-      onClick={() => setShowFile(item)}
+      onClick={() => setShowFile(file)}
     >
-      {item.fileType === "image" ? (
+      {file.fileType === "image" ? (
         <img
-          src={item.url}
-          alt={item.name}
+          src={file.url}
+          alt={file.name}
           style={{ width: "120px", height: "120px", objectFit: "cover" }}
         />
       ) : (
         <video
-          src={item.url}
-          alt={item.name}
+          src={file.url}
+          alt={file.name}
+          controls
           style={{ width: "120px", height: "120px", objectFit: "cover" }}
-        ></video>
+        />
       )}
-      <div>{item.name}</div>
+      <div>{file.name}</div>
     </div>
   );
 }
