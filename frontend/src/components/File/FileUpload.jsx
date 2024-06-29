@@ -10,10 +10,6 @@ function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
   const handleFileUpload = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -29,7 +25,7 @@ function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
         undefined,
         contentType
       );
-      console.log("response -> ",response);
+
       if (response.data.success) {
         setLoading(false);
         toast.success(response.data.message);

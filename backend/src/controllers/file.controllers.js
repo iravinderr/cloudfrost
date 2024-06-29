@@ -8,7 +8,11 @@ import fs from "fs";
 
 export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { parentFolderId } = req.body;
+    let parentFolderId;
+    if (req.body.parentFolderId === undefined) {
+        parentFolderId === null;
+    }
+
     const file = req.file;
     if (!file) {
         return ErrorResponse(res, 400, "Select a file");

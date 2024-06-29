@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { createFolderAPI } from "../../services/apis";
 import toast from "react-hot-toast";
 import Input from "../Input";
