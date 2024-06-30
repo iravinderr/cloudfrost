@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Options, Item } from "../components";
+import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Options, Item, Rename, Delete } from "../components";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 import { getRequestAxios } from "../services/requests";
 import { useParams } from "react-router-dom";
@@ -11,7 +11,10 @@ function Dashboard() {
   const [showFile, setShowFile] = useState(null);
   const [loading, setLoading] = useState(null);
   const { parentFolderId } = useParams();
+  const [itemForOptions, setItemForOptions] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [showRename, setShowRename] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -47,12 +50,12 @@ function Dashboard() {
   }
 
   return (
-    <div className="w-screen h-screen p-8 flex flex-col gap-8">
-      <div className="flex flex-wrap gap-4">
-        {items.map((item) => <Item item={item} setShowOptions={setShowOptions} setShowFile={setShowFile} /> )}
+    <div className="w-screen h-screen flex flex-col gap-8">
+      <div className="m-8 flex flex-wrap gap-4">
+        {items.map((item) => <Item item={item} setShowOptions={setShowOptions} setShowFile={setShowFile} setItemForOptions={setItemForOptions} /> )}
       </div>
 
-      <div className="sticky top-3/4 flex justify-center items-center">
+      <div className="m-8 sticky top-3/4 flex justify-center items-center">
         <BlueButton onClick={() => setNewCreation({ type: "folder" })}>Create Folder</BlueButton>
         <BlueButton onClick={() => setNewCreation({ type: "file" })}>Upload File</BlueButton>
       </div>
@@ -63,7 +66,10 @@ function Dashboard() {
 
       { showFile && <Modal file={showFile} setShowFile={setShowFile} /> }
 
-      { showOptions && <Options setShowOptions={setShowOptions} /> }
+      { showOptions && <Options setShowOptions={setShowOptions} setShowRename={setShowRename} setShowDelete={setShowDelete} /> }
+
+      { showRename && <Rename /> }
+      { showDelete && <Delete item={itemForOptions} setItem={setItemForOptions} setShowDelete={setShowDelete} fetchItems={fetchItems} /> }
     </div>
   );
 }

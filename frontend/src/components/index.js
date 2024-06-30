@@ -7,6 +7,7 @@ import Item from "./Item/Item";
 import Modal from "./Item/Modal";
 import Options from "./Options/Options";
 import Rename from "./Options/Rename";
+import Delete from "./Options/Delete";
 import Input from "./Input";
 import Loader from "./Loader";
 import PrivateRoute from "./PrivateRoute";
@@ -22,6 +23,7 @@ export {
     Modal,
     Options,
     Rename,
+    Delete,
     Input,
     Loader,
     PrivateRoute,

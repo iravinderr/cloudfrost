@@ -2,11 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEllipsisVertical } from "react-icons/fa6";
 
-function Item({ item, setShowFile, setShowOptions }) {
+function Item({ item, setShowFile, setShowOptions, setItemForOptions }) {
   const navigate = useNavigate();
   const handleOptionsClick = (e) => {
     e.stopPropagation();
     setShowOptions(true);
+    setItemForOptions(item);
   };
 
   return (

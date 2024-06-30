@@ -1,21 +1,15 @@
 import React from "react";
 
-function Options({ setShowOptions }) {
+function Options({ setShowOptions, setShowRename, setShowDelete }) {
 
-    const renameHandler = async () => {
-        try {
-            setShowOptions(false);
-        } catch (error) {
-            
-        }
+    const renameHandler = () => {
+      setShowOptions(false);
+      setShowRename(true);
     }
     
-    const deleteHandler = async () => {
-        try {
-            setShowOptions(false);
-        } catch (error) {
-            
-        }
+    const deleteHandler = () => {
+      setShowOptions(false);
+      setShowDelete(true);
     }
 
   const options = [
