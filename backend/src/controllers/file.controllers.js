@@ -8,10 +8,9 @@ import fs from "fs";
 
 export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-
     let { parentFolderId } = req.body;
-    if (parentFolderId === undefined) {
-        parentFolderId === null;
+    if (parentFolderId == "undefined") {
+        parentFolderId = null;
     }
 
     const file = req.file;
@@ -21,6 +20,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
 
     const fileType = file.mimetype.split("/")[0];
     if (fileType !== "image") {
+        fs.unlinkSync(file.path);
         return ErrorResponse(res, 400, "Currenty this application supports image files only");
     }
     
