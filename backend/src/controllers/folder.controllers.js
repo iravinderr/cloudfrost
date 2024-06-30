@@ -1,5 +1,6 @@
 import { FILE } from "../models/file.models.js";
 import { FOLDER } from "../models/folder.models.js";
+import { USER } from "../models/user.models.js";
 import { asyncHandler } from "../utils/handler.utils.js";
 import { ErrorResponse, SuccessResponse } from "../utils/responses.utils.js";
 
@@ -48,6 +49,7 @@ export const renameFolder = asyncHandler(async (req, res) => {
 });
 
 export const deleteFolder = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
     const folderId = req.query.folderId;
 
     const deleteFolderContent = async (folderId) => {
@@ -57,7 +59,14 @@ export const deleteFolder = asyncHandler(async (req, res) => {
             await deleteFolderContent(subFolder._id);
         }
 
+        const files = await FILE.find({ parentFolderId: folderId });
+        let totalSize = 0;
+        files.forEach((file) => {
+            totalSize += file.size;
+        })
+
         await FILE.deleteMany({ parentFolderId: folderId });
+        await USER.findByIdAndUpdate(userId, { $inc: { availableStorage: totalSize } });
         await FOLDER.findByIdAndDelete(folderId);
     }
 
