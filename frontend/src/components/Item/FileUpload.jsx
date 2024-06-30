@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Loader from "../Loader";
 import Input from "../Input";
 
-function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
+function FileUpload({ parentFolderId, fetchItems, setNewCreation }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(null);
 
@@ -28,9 +28,9 @@ function FileUpload({ parentFolderId, refreshItems, setNewCreation }) {
 
       if (response.data.success) {
         setLoading(false);
-        toast.success(response.data.message);
         setNewCreation(null);
-        refreshItems();
+        toast.success(response.data.message);
+        fetchItems();
       }
     } catch (error) {
       setLoading(false);

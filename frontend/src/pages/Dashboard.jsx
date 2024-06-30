@@ -60,9 +60,9 @@ function Dashboard() {
         <BlueButton onClick={() => setNewCreation({ type: "file" })}>Upload File</BlueButton>
       </div>
 
-      { newCreation && newCreation.type === "folder" && <FolderCreation parentFolderId={parentFolderId} refreshItems={fetchItems} setNewCreation={setNewCreation} /> }
+      { newCreation && newCreation.type === "folder" && <FolderCreation parentFolderId={parentFolderId} fetchItems={fetchItems} setNewCreation={setNewCreation} /> }
 
-      { newCreation && newCreation.type === "file" && <FileUpload parentFolderId={parentFolderId} refreshItems={fetchItems} setNewCreation={setNewCreation} /> }
+      { newCreation && newCreation.type === "file" && <FileUpload parentFolderId={parentFolderId} fetchItems={fetchItems} setNewCreation={setNewCreation} /> }
 
       { showFile && <Modal file={showFile} setShowFile={setShowFile} /> }
 

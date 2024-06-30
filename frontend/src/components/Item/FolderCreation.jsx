@@ -5,7 +5,7 @@ import Input from "../Input";
 import BlueButton from "../Buttons/BlueButton";
 import { postRequestAxios } from "../../services/requests";
 
-function FolderCreation({ parentFolderId, refreshItems, setNewCreation }) {
+function FolderCreation({ parentFolderId, fetchItems, setNewCreation }) {
   const [folderName, setFolderName] = useState("");
 
   const handleFolderCreation = async (e) => {
@@ -14,9 +14,9 @@ function FolderCreation({ parentFolderId, refreshItems, setNewCreation }) {
       const reqBody = { name: folderName, parentFolderId };
       const response = await postRequestAxios(createFolderAPI, reqBody);
       if (response.data.success) {
-        toast.success(response.data.message);
         setNewCreation(null);
-        refreshItems();
+        toast.success(response.data.message);
+        fetchItems();
       }
     } catch (error) {
       toast.error(error.response.data.message);
