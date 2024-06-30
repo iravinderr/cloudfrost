@@ -9,12 +9,12 @@ function Dashboard() {
   const [items, setItems] = useState([]);
   const [newCreation, setNewCreation] = useState(null);
   const [showFile, setShowFile] = useState(null);
-  const [loading, setLoading] = useState(null);
-  const { parentFolderId } = useParams();
   const [itemForOptions, setItemForOptions] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showRename, setShowRename] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [loading, setLoading] = useState(null);
+  const { parentFolderId } = useParams();
 
   const fetchItems = async () => {
     setLoading(true);
