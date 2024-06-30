@@ -30,7 +30,7 @@ function Item({ item, setShowFile, setShowOptions, setItemForOptions }) {
       {item.type === "folder" ? (
         <div>{item.name}</div>
       ) : (
-        <div className="flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center">
           {item.fileType === "image" ? (
             <img
               src={item.url}
@@ -45,7 +45,7 @@ function Item({ item, setShowFile, setShowOptions, setItemForOptions }) {
               style={{ width: "120px", height: "120px", objectFit: "cover" }}
             />
           )}
-          <p className="text-sm" >{item.name}</p>
+          <p className="text-sm truncate w-full text-center" >{item.name}</p>
         </div>
       )}
     </div>
