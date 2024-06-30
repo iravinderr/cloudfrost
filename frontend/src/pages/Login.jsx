@@ -12,8 +12,6 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(null);
 
-  const togglePasswordVisiblity = () => setShowPassword(!showPassword);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -45,9 +43,7 @@ function Login() {
       <form>
         <Input type={"email"} placeholder={"Email"} value={email} setValue={setEmail} />
         
-        <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} setValue={setPassword} />
-
-        <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
+        <Input type={"password"} value={password} setValue={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Password"} />
 
         <BlueButton onClick={handleLogin}>Login</BlueButton>
       </form>

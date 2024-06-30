@@ -15,8 +15,6 @@ function Register() {
   const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
 
-  const togglePasswordVisiblity = () => setShowPassword(!showPassword);
-
   const handleSendOTP = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,9 +67,7 @@ function Register() {
 
           <Input type={"email"} placeholder={"Email"} value={email} setValue={setEmail} />
 
-          <Input type={showPassword ? "text" : "password"} placeholder={"Password"} value={password} setValue={setPassword} />
-
-          <BlueButton onClick={togglePasswordVisiblity}>{showPassword ? "Hide Passowrd" : "Show Password"}</BlueButton>
+          <Input type={"password"} placeholder={"Password"} value={password} setValue={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} />
 
           <BlueButton onClick={handleSendOTP} >Register</BlueButton>
         </form>
