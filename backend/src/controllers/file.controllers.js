@@ -19,8 +19,12 @@ export const uploadFile = asyncHandler(async (req, res) => {
         return ErrorResponse(res, 400, "Select a file");
     }
 
-    const fileName = file.originalname.split(".")[0];
     const fileType = file.mimetype.split("/")[0];
+    if (fileType !== "image") {
+        return ErrorResponse(res, 400, "Currenty this application supports image files only");
+    }
+    
+    const fileName = file.originalname.split(".")[0];
     const fileRes = await FILE.findOne({ name: fileName, fileType, parentFolderId, userId });
     if (fileRes) {
         fs.unlinkSync(file.path);

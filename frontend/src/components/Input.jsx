@@ -15,7 +15,7 @@ function Input({ type, placeholder, value, setValue, showPassword, setShowPasswo
   return (
     <div className={`h-12 flex justify-center items-center border-[2px] border-black rounded-sm`}>
       <input
-          className="h-full w-full p-3 "
+          className="h-full w-full p-3"
           type={type === "password" && showPassword ? "text" : type}
           placeholder={placeholder}
           value={type === "file" ? undefined : value}
