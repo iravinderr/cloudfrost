@@ -1,7 +1,6 @@
 import React from "react";
 
 function Modal({ file, setShowFile }) {
-  console.log("file -> ", file);
   return (
     <div
       className="flex justify-center items-center w-full h-full z-50 fixed left-0 top-0 overflow-auto bg-ModalBG "

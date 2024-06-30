@@ -1,26 +1,28 @@
-import FileUpload from "./File/FileUpload";
-import FolderCreation from "./Folder/FolderCreation";
-import Header from "./Header/Header";
-import PrivateRoute from "./PrivateRoute";
-import Loader from "./Loader";
-import Modal from "./File/Modal";
-import RedButton from "./Buttons/RedButton";
 import BlueButton from "./Buttons/BlueButton";
+import RedButton from "./Buttons/RedButton";
+import Header from "./Header/Header";
+import FileUpload from "./Item/FileUpload";
+import FolderCreation from "./Item/FolderCreation";
+import Item from "./Item/Item";
+import Modal from "./Item/Modal";
+import Options from "./Options/Options";
+import Rename from "./Options/Rename";
 import Input from "./Input";
-import Folder from "./Folder/Folder";
-import File from "./File/File";
+import Loader from "./Loader";
+import PrivateRoute from "./PrivateRoute";
 
 
 export {
-    FileUpload,
-    FolderCreation,
-    Header,
-    PrivateRoute,
-    Loader,
-    Modal,
     RedButton,
     BlueButton,
+    Header,
+    FileUpload,
+    FolderCreation,
+    Item,
+    Modal,
+    Options,
+    Rename,
     Input,
-    Folder,
-    File
+    Loader,
+    PrivateRoute,
 }

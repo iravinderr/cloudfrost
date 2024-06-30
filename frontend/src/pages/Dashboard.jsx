@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Folder, File } from "../components";
-import toast from "react-hot-toast";
+import { Modal, Loader, FolderCreation, FileUpload, BlueButton, Options, Item } from "../components";
 import { getFoldersAPI, getFilesAPI } from "../services/apis";
 import { getRequestAxios } from "../services/requests";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const [items, setItems] = useState([]);
@@ -11,6 +11,7 @@ function Dashboard() {
   const [showFile, setShowFile] = useState(null);
   const [loading, setLoading] = useState(null);
   const { parentFolderId } = useParams();
+  const [showOptions, setShowOptions] = useState(false);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -48,9 +49,7 @@ function Dashboard() {
   return (
     <div className="w-screen h-screen p-8 flex flex-col gap-8">
       <div className="flex flex-wrap gap-4">
-        {items.map((item) => 
-          item.type === "folder" ? <Folder folder={item} /> : <File file={item} setShowFile={setShowFile} />
-        )}
+        {items.map((item) => <Item item={item} setShowOptions={setShowOptions} setShowFile={setShowFile} /> )}
       </div>
 
       <div className="sticky top-3/4 flex justify-center items-center">
@@ -63,6 +62,8 @@ function Dashboard() {
       { newCreation && newCreation.type === "file" && <FileUpload parentFolderId={parentFolderId} refreshItems={fetchItems} setNewCreation={setNewCreation} /> }
 
       { showFile && <Modal file={showFile} setShowFile={setShowFile} /> }
+
+      { showOptions && <Options setShowOptions={setShowOptions} /> }
     </div>
   );
 }

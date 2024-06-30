@@ -8,8 +8,9 @@ import fs from "fs";
 
 export const uploadFile = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    let parentFolderId;
-    if (req.body.parentFolderId === undefined) {
+
+    let { parentFolderId } = req.body;
+    if (parentFolderId === undefined) {
         parentFolderId === null;
     }
 
@@ -20,7 +21,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
 
     const fileName = file.originalname.split(".")[0];
     const fileType = file.mimetype.split("/")[0];
-    const fileRes = await FILE.findOne({ name: fileName, fileType , parentFolderId, userId });
+    const fileRes = await FILE.findOne({ name: fileName, fileType, parentFolderId, userId });
     if (fileRes) {
         fs.unlinkSync(file.path);
         return ErrorResponse(res, 400, "File already exists with the name");

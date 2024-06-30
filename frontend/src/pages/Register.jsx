@@ -41,7 +41,7 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const reqBody = { email, OTP, fullName, password };
+      const reqBody = { email, otp: OTP, fullName, password };
       const contentType = "multipart/form-data";
 
       const response = await postRequestAxios(confirmRegistrationAPI, reqBody, null, null, contentType);

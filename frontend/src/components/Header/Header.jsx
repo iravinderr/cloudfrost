@@ -63,7 +63,7 @@ function Header() {
   ];
 
   return (
-    <header className="sticky top-0">
+    <header className="sticky top-0 z-50 ">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-CustomBlack gap-2">
         <div className="w-1/3 flex justify-center items-center  ">
           <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md ">Cloudfrost</Link>
