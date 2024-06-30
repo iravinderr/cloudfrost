@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { refreshTokensAPI, verifyTokenAPI } from "../services/apis";
 import { postRequestAxios } from "../services/requests";
 import { Loader } from "../components";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -18,34 +19,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const refreshTokens = async () => {
-    try {
-      const response = await postRequestAxios(refreshTokensAPI, null, null, localStorage.getItem("refreshToken"));
-      return response.data.success;
-    } catch (error) {
-      return false;
-    }
-  };
-
   useEffect(() => {
     (async () => {
-      const tokenValid = await verifyToken();
-      if (tokenValid) {
+      if (await verifyToken()) {
         setAuthenticated(true);
-      } else {
-        const tokensRefreshed = await refreshTokens();
-        if (tokensRefreshed) {
-          setAuthenticated(true);
-        } else {
-          setAuthenticated(false);
-        }
       }
       setLoading(false);
     })();
   }, []);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
