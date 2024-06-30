@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 const useAuthNavigation = () => {
   const navigate = useNavigate();
-  const { loading, authenticated, setAuthenticated } = useAuth();
+  const { loading, setLoading, authenticated, setAuthenticated } = useAuth();
 
   useEffect(() => {
     if (authenticated) {
@@ -12,7 +12,7 @@ const useAuthNavigation = () => {
     }
   }, [authenticated, navigate]);
 
-  return { loading, authenticated, setAuthenticated };
+  return { authenticated, setAuthenticated, loading, setLoading };
 };
 
 export default useAuthNavigation;

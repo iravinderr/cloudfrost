@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { refreshTokensAPI, verifyTokenAPI } from "../services/apis";
+import { verifyTokenAPI } from "../services/apis";
 import { postRequestAxios } from "../services/requests";
 import { Loader } from "../components";
-import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated, loading }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated, loading, setLoading }}>
       {children}
     </AuthContext.Provider>
   );
