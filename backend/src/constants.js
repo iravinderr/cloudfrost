@@ -1,1 +1,1 @@
-export const DATABASE_NAME = "cloudfrost";
+export const DATABASE_NAME = "WalCloud";

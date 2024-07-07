@@ -40,8 +40,8 @@ otpSchema.pre("save", async function (next) {
     
     const mail_response = await mailer(
         this.email,
-        `Verification otp from Cloudfrost Services`,
-        `This is the verification otp email from Cloudfrost Services.
+        `Verification otp from WalCloud Services`,
+        `This is the verification otp email from WalCloud Services.
         Use ${this.otp} as your verification otp. This otp is valid for the next five minutes.`
     );
 
