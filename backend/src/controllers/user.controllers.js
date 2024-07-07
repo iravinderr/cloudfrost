@@ -30,7 +30,7 @@ export const register = asyncHandler(async (req, res) => {
 export const confirmRegistration = asyncHandler(async (req, res) => {
     const { fullName, email, password, otp } = req.body;
 
-    const recentOTP = await OTP.findOne({ email }).so;
+    const recentOTP = await OTP.findOne({ email }).sort({ createdAt : -1 }).limit(1);
 
     if (!recentOTP) {
         return ErrorResponse(res, 400, "OTP expired. Try again.");
