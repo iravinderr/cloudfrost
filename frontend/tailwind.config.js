@@ -12,6 +12,9 @@ export default {
         CustomBlue: "#4B88A2",
         CustomWhiteSnow: "#FFF9FB",
         ModalBG: "rgba(0, 0, 0, 0.5)"
+      },
+      fontFamily: {
+        Crusader: ["Crusader", "sans-serif"]
       }
     },
   },

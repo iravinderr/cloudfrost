@@ -66,7 +66,12 @@ function Header() {
     <header className="sticky top-0 z-50 ">
       <nav className="h-16 w-screen p-2 flex justify-evenly Header bg-CustomBlack gap-2">
         <div className="w-1/3 flex justify-center items-center  ">
-          <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md ">WalCloud</Link>
+          <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md font-Crusader">
+          <div className='flex'>
+        <h1 className='text-xl font-Crusader text-CustomRed'>Wal</h1>
+        <h1 className='text-xl font-Crusader text-CustomBlue'>Cloud</h1>
+      </div>
+          </Link>
         </div>
         <ul className="w-2/3 flex justify-evenly items-center">
           {navItems.map((item) =>
