@@ -1,7 +1,14 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ],
-    "public": "/public"
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "public": "public",
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "max-age=31536000" }
+      ]
+    }
+  ]
 }
-  
