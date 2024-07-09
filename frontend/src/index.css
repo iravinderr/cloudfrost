@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Crusader";
-  src: url('./src/assets/fonts/raidercrusader.ttf') format('truetype');
+  src: url('/fonts/raidercrusader.ttf') format('truetype');
 }
 
 * {
