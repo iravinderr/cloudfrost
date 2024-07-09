@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Crusader";
-  src: url('/fonts/raidercrusader.ttf') format('truetype');
-}
-
 * {
   margin: 0;
   padding: 0;

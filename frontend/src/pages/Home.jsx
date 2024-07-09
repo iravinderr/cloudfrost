@@ -12,8 +12,8 @@ function Home() {
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='flex'>
-        <h1 className='text-9xl font-Crusader text-CustomRed'>Wal</h1>
-        <h1 className='text-9xl font-Crusader text-CustomBlue'>Cloud</h1>
+        <h1 className='text-9xl font-TitanOne text-CustomRed'>Wal</h1>
+        <h1 className='text-9xl font-TitanOne text-CustomBlue'>Cloud</h1>
       </div>
         <p className='text-3xl text-red-900'>This is a prototype cloud storage web application</p>
     </div>

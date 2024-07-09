@@ -68,8 +68,8 @@ function Header() {
         <div className="w-1/3 flex justify-center items-center  ">
           <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md font-Crusader">
             <div className='flex'>
-              <h1 className='text-xl font-Crusader text-CustomRed'>Wal</h1>
-              <h1 className='text-xl font-Crusader text-CustomBlue'>Cloud</h1>
+              <h1 className='text-xl font-TitanOne text-CustomRed'>Wal</h1>
+              <h1 className='text-xl font-TitanOne text-CustomBlue'>Cloud</h1>
             </div>
           </Link>
         </div>

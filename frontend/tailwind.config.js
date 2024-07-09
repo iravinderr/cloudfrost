@@ -14,7 +14,7 @@ export default {
         ModalBG: "rgba(0, 0, 0, 0.5)"
       },
       fontFamily: {
-        Crusader: ["Crusader", "sans-serif"]
+        TitanOne: ["Titan One", "sans-serif"]
       }
     },
   },
