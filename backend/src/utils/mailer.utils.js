@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { APP_NAME } from "../constants";
 
 export const mailer = async (email, title, body) => {
     try {
@@ -11,7 +12,7 @@ export const mailer = async (email, title, body) => {
         })
 
         const mailResponse = await transporter.sendMail({
-            from: `WalCloud Services`,
+            from: `${APP_NAME} Services`,
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`

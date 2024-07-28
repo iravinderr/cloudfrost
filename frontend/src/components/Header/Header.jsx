@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import StorageInfo from "./StorageInfo";
-import { RedButton } from "../";
 import useAuthNavigation from "../../hooks/AuthNavigation";
 import { deleteRequestAxios, postRequestAxios } from "../../services/requests";
 import { deleteAccountAPI, logoutAPI } from "../../services/apis";
+import { APP_NAME } from "../../constants";
+import StorageInfo from "./StorageInfo";
 import toast from "react-hot-toast";
+import { RedButton } from "../";
 
 function Header() {
   const { authenticated, setAuthenticated } = useAuthNavigation();
@@ -68,8 +69,7 @@ function Header() {
         <div className="w-1/3 flex justify-center items-center  ">
           <Link to="/" className="p-3 text-white hover:bg-[#555] rounded-md font-Crusader">
             <div className='flex'>
-              <h1 className='text-xl font-TitanOne text-CustomRed'>Wal</h1>
-              <h1 className='text-xl font-TitanOne text-CustomBlue'>Cloud</h1>
+              <h1 className='text-xl font-TitanOne text-CustomBlue'>{APP_NAME}</h1>
             </div>
           </Link>
         </div>

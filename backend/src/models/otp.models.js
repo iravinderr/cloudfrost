@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import otpGenerator from "otp-generator";
 import { mailer } from "../utils/mailer.utils.js";
+import { APP_NAME } from "../constants.js";
 
 const otpSchema = new Schema({
     email: {
@@ -40,8 +41,8 @@ otpSchema.pre("save", async function (next) {
     
     const mail_response = await mailer(
         this.email,
-        `Verification otp from WalCloud Services`,
-        `This is the verification otp email from WalCloud Services.
+        `Verification otp from ${APP_NAME} Services`,
+        `This is the verification otp email from ${APP_NAME} Services.
         Use ${this.otp} as your verification otp. This otp is valid for the next five minutes.`
     );
 

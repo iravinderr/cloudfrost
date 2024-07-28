@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { APP_NAME } from "../constants";
 
 export const uploadToCloudinary = async (localFilePath) => {
     try {
@@ -7,7 +8,7 @@ export const uploadToCloudinary = async (localFilePath) => {
 
         const uploadResponse = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto",
-            folder: "WalCloud",
+            folder: `${APP_NAME}`,
             use_filename: true
         });
 
