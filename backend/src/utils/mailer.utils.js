@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { APP_NAME } from "../constants";
+import { APP_NAME } from "../constants.js";
 
 export const mailer = async (email, title, body) => {
     try {
